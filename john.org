@@ -1034,12 +1034,27 @@ with HTTPS sites.
 #+begin_src emacs-lisp
 
 (use-package multiple-cursors
-  :ensure multiple-cursors)
+  :ensure multiple-cursors
+  :bind 
+   (("C-c m a" . mc/mark-all-like-this)
+    ("C-c m m" . mc/mark-all-like-this-dwim)
+    ("C-c m l" . mc/edit-lines)
+    ("C-c m n" . mc/mark-next-like-this)
+    ("C-c m p" . mc/mark-previous-like-this)
+    ("C-c m s" . mc/mark-sgml-tag-pair)
+    ("C-c m d" . mc/mark-all-like-this-in-defun)))
 
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(use-package phi-search
+  :ensure phi-search)
+(use-package phi-search-mc
+  :ensure phi-search-mc
+  :config
+  (phi-search-mc/setup-keys))
+(use-package mc-extras
+  :ensure mc-extras
+  :config
+    (define-key mc/keymap (kbd "C-. =") 'mc/compare-chars))
+
 
 #+end_src
 
