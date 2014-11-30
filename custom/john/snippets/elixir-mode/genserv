@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+#name : genserv
+# --
+defmodule $1 do
+  use GenServer
+
+  def init($2) do
+    $3
+  end
+
+  def handle_call($4, _from, state) do
+    $5
+  end
+end

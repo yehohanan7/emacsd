@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : define
+# --
+define(['$1'], function ($2) {
+    function $3($4) {
+      $0
+    }
+    
+    return $3;
+});

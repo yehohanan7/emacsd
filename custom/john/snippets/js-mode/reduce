@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : reduce
+# --
+
+var $1 = _.reduce($2, function(x, acc){ 
+  return $0; 
+}, $3);

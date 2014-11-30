@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : map
+# --
+var $1 = _.map($2, function(x) {
+  return $0;
+});
