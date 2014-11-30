@@ -346,6 +346,7 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
 
 #+begin_src emacs-lisp
   (use-package helm-swoop
+   :ensure helm-swoop
    :bind
    (("C-S-s" . helm-swoop)
     ("M-i" . helm-swoop)
@@ -1008,6 +1009,11 @@ with HTTPS sites.
   (add-hook 'prog-mode-hook 'company-mode))
 #+end_src
 
+** Writing
+#+begin_src emacs-lisp
+(setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
+#+end_src
+
 ** Internet Relay Chat
 
    IRC is a great way to hang out with other Emacs geeks.
@@ -1036,7 +1042,6 @@ with HTTPS sites.
 
 #+end_src
 
-
 ** Web browsing
 
 	 Minor tweak for Firefox on Windows. Otherwise I get "Searching for
@@ -1047,7 +1052,6 @@ with HTTPS sites.
          "C:/Program Files (x86)/Mozilla Firefox/firefox.exe")
 	 #+end_src
 
-
 ** Themes
 #+begin_src emacs-lisp
 
@@ -1056,8 +1060,4 @@ with HTTPS sites.
 
 #+end_src
 
-** Writing
-#+begin_src emacs-lisp
-(setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
-#+end_src
 
