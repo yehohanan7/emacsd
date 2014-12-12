@@ -13,6 +13,7 @@
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (setq org-agenda-files '("~/Dropbox/notes/"))
+(setq org-agenda-files '("~/Dropbox/notes/tui"))
 
 #+end_src
 
@@ -1009,6 +1010,13 @@ with HTTPS sites.
   :config
   (add-hook 'prog-mode-hook 'company-mode))
 #+end_src
+
+*** Yaml mode
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :ensure yaml-mode)
+#+end_src
+
 
 ** Writing
 #+begin_src emacs-lisp
