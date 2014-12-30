@@ -1017,6 +1017,12 @@ with HTTPS sites.
   :ensure yaml-mode)
 #+end_src
 
+*** Better defaults
+#+begin_src emacs-lisp
+(use-package better-defaults
+  :ensure better-defaults)
+#+end_src
+
 
 ** Writing
 #+begin_src emacs-lisp
