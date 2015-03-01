@@ -41,6 +41,7 @@ after adding these for the first time.
 #+begin_src emacs-lisp
 (require 'fortune)
 (require 'proxy-activate)
+(require 'gtalk)
 #+end_src
 
 ** General configuration
@@ -247,7 +248,7 @@ it work. Some things still aren't quite right.
   (use-package color-theme-solarized :ensure color-theme-solarized)
   (defun sacha/setup-color-theme ()
     (interactive)
-    (color-theme-solarized 'dark)
+    (color-theme-solarized)
     (set-face-foreground 'secondary-selection "darkblue")
     (set-face-background 'secondary-selection "lightblue")
     (set-face-background 'font-lock-doc-face "black")
@@ -1023,6 +1024,18 @@ with HTTPS sites.
   :ensure better-defaults)
 #+end_src
 
+*** Erlang 
+#+begin_src emacs-lisp
+(use-package erlang
+  :ensure erlang)
+#+end_src
+
+*** Clojure
+#+begin_src emacs-lisp
+(use-package cider
+  :ensure cider)
+#+end_src
+
 
 ** Writing
 #+begin_src emacs-lisp
@@ -1089,5 +1102,6 @@ with HTTPS sites.
   :ensure molokai-theme)
 
 #+end_src
+
 
 
