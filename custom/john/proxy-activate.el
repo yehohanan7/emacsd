@@ -1,14 +1,16 @@
 (defun proxy-activate ()
   (interactive)
-  (setq url-proxy-services
-   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-     ("http" . "10.33.99.65:80")
-     ("https" . "10.33.99.65:80")))
 
-  (setq url-http-proxy-basic-auth-storage
-    (list (list "10.33.99.65:80"
+  (let ((proxy "host:port") (credentials "username:password"))
+    (setq url-proxy-services
+      `(("no_proxy" . "^\\(localhost\\|10.*\\)")
+       ("http" . ,proxy)
+       ("https" . ,proxy)))
+
+    (setq url-http-proxy-basic-auth-storage
+      (list (list proxy
                 (cons "Input your LDAP UID !"
-                      (base64-encode-string "tuijpx:Erlang$12345"))))))
+                      (base64-encode-string credentials)))))))
 
 (provide 'proxy-activate)
 

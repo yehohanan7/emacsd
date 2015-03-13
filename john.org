@@ -28,6 +28,14 @@
 Use =M-x package-refresh-contents= to reload the list of packages
 after adding these for the first time.
 
+** Load custom modules
+#+begin_src emacs-lisp
+(require 'fortune)
+(require 'proxy-activate)
+
+'(proxy-activate)
+#+end_src
+
 ** Install use-package if not installed
 #+begin_src emacs-lisp
 (if (not (package-installed-p 'use-package))
@@ -35,13 +43,6 @@ after adding these for the first time.
       (package-refresh-contents)
       (package-install 'use-package)))
 (require 'use-package)
-#+end_src
-
-** Load custom modules
-#+begin_src emacs-lisp
-(require 'fortune)
-(require 'proxy-activate)
-(require 'gtalk)
 #+end_src
 
 ** General configuration
