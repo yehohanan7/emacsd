@@ -234,54 +234,6 @@ Lazy people like me never want to type "yes" when "y" will suffice.
     :init (miniedit-install))
 #+end_src
 
-*** Set up a light-on-dark color scheme
-
-I like light on dark because I find it to be more restful. The
-color-theme in ELPA was a little odd, though, so we define some advice to make
-it work. Some things still aren't quite right.
-
-#+begin_src emacs-lisp
-  (defadvice color-theme-alist (around sacha activate)
-    (if (ad-get-arg 0)
-        ad-do-it
-      nil))
-  (use-package color-theme :ensure color-theme)
-  (use-package color-theme-solarized :ensure color-theme-solarized)
-  (defun sacha/setup-color-theme ()
-    (interactive)
-    (color-theme-solarized)
-    (set-face-foreground 'secondary-selection "darkblue")
-    (set-face-background 'secondary-selection "lightblue")
-    (set-face-background 'font-lock-doc-face "black")
-    (set-face-foreground 'font-lock-doc-face "wheat")
-    (set-face-background 'font-lock-string-face "black")
-    (set-face-foreground 'org-todo "green")
-    (set-face-background 'org-todo "black"))
- 
-  (use-package color-theme
-    :init
-    (when window-system
-      (sacha/setup-color-theme)))
-#+end_src
-
-I sometimes need to switch to a lighter background for screenshots.
-For that, I use =color-theme-vim=.
-
-Some more tweaks to solarized:
-#+begin_src emacs-lisp
-(when window-system
-  (custom-set-faces
-   '(erc-input-face ((t (:foreground "antique white"))))
-   '(helm-selection ((t (:background "ForestGreen" :foreground "black"))))
-   '(org-agenda-clocking ((t (:inherit secondary-selection :foreground "black"))) t)
-   '(org-agenda-done ((t (:foreground "dim gray" :strike-through nil))))
-   '(org-done ((t (:foreground "PaleGreen" :weight normal :strike-through t))))
-   '(org-clock-overlay ((t (:background "SkyBlue4" :foreground "black"))))
-   '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "LightSalmon" :strike-through t))))
-   '(outline-1 ((t (:inherit font-lock-function-name-face :foreground "cornflower blue"))))))
-
-#+end_src
-
 *** Undo tree mode - visualize your undos and branches
 
 People often struggle with the Emacs undo model, where there's really no concept of "redo" - you simply undo the undo. 
@@ -613,40 +565,6 @@ From http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 #+end_src
 
 ** Coding
-*** Ecb
-#+begin_src emacs-lisp
-
-(use-package ecb
-  :ensure ecb)
-(global-set-key (kbd "C-;") 'ecb-show-ecb-windows)
-(global-set-key (kbd "C-'") 'ecb-hide-ecb-windows)
-
-(require 'ecb-autoloads)
-#+end_src
-
-*** Web development
-#+begin_src emacs-lisp
-  ;; from FAQ at http://web-mode.org/ for smartparens
-  (defun sacha/web-mode-hook ()
-    (setq web-mode-enable-auto-pairing nil))
-
-  (defun sacha/sp-web-mode-is-code-context (id action context)
-    (when (and (eq action 'insert)
-               (not (or (get-text-property (point) 'part-side)
-                        (get-text-property (point) 'block-side))))
-      t))
-
-  (use-package web-mode
-    :ensure web-mode
-    :init (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-    :config
-    (progn
-      (setq web-mode-enable-current-element-highlight t)
-      (setq web-mode-ac-sources-alist
-            '(("css" . (ac-source-css-property))
-              ("html" . (ac-source-words-in-buffer ac-source-abbrev)))
-            )))
-#+end_src
 *** Tab width of 2 is compact and readable
 #+begin_src emacs-lisp
     (setq-default tab-width 2)
@@ -1035,6 +953,10 @@ with HTTPS sites.
 #+begin_src emacs-lisp
 (use-package cider
   :ensure cider)
+
+(use-package paredit
+  :ensure paredit)
+
 #+end_src
 
 
@@ -1099,8 +1021,8 @@ with HTTPS sites.
 ** Themes
 #+begin_src emacs-lisp
 
-(use-package molokai-theme
-  :ensure molokai-theme)
+(use-package ample-zen-theme
+  :ensure ample-zen-theme)
 
 #+end_src
 
