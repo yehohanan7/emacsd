@@ -957,6 +957,9 @@ with HTTPS sites.
 (use-package paredit
   :ensure paredit)
 
+(use-package ac-cider
+  :ensure ac-cider)
+
 #+end_src
 
 
