@@ -13,8 +13,6 @@
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (setq org-agenda-files '("~/Dropbox/notes/"))
-(setq org-agenda-files '("~/Dropbox/notes/tui"))
-
 #+end_src
 
 *** Add package sources
