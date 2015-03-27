@@ -949,7 +949,21 @@ with HTTPS sites.
 #+end_src
 
 *** Clojure
+**** org babel configuration
+
 #+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(use-package ob-clojure)
+(setq org-babel-clojure-backend 'cider)
+#+end_src
+
+**** cider & paredit configs
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(use-package ob-clojure)
+
+(setq org-babel-clojure-backend 'cider)
+
 (use-package cider
   :ensure cider)
 
@@ -961,6 +975,7 @@ with HTTPS sites.
 
 #+end_src
 
+*** Common lisp
 
 ** Writing
 #+begin_src emacs-lisp
