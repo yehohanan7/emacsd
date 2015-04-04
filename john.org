@@ -49,7 +49,7 @@ after adding these for the first time.
 ** General configuration
 *** Backups
 
-This is one of the things people usually want to change right away. By default, Emacs saves backup files in the current directory. These are the files ending in =~= that are cluttering up your directory lists. The following code stashes them all in =~/.emacs.d/backups=, where I can find them with =C-x C-f= (=find-file=) if I really need to.
+Store backup files under backup 
 
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -238,7 +238,7 @@ Lazy people like me never want to type "yes" when "y" will suffice.
 *** Undo tree mode - visualize your undos and branches
 
 People often struggle with the Emacs undo model, where there's really no concept of "redo" - you simply undo the undo. 
-# 
+
 This lets you use =C-x u= (=undo-tree-visualize=) to visually walk through the changes you've made, undo back to a certain point (or redo), and go down different branches.
 
 #+begin_src emacs-lisp
@@ -911,7 +911,6 @@ with HTTPS sites.
                slime-fancy)) 
 
 #+end_src
-
 
 ** Writing
 #+begin_src emacs-lisp
