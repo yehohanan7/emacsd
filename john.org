@@ -13,6 +13,7 @@
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
+(add-to-list 'load-path "~/.emacs.d/slime/")
 (setq org-agenda-files '("~/Dropbox/notes/"))
 #+end_src
 
@@ -897,12 +898,11 @@ with HTTPS sites.
 *** Common lisp
 
 #+begin_src emacs-lisp
-(use-package slime
-  :ensure slime)
+(require 'slime)
+(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((lisp . t)))
+
 #+end_src
 
 
