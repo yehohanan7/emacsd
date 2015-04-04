@@ -898,10 +898,17 @@ with HTTPS sites.
 *** Common lisp
 
 #+begin_src emacs-lisp
-(require 'slime)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+(require 'slime-autoloads)
 
+(slime-setup '(slime-repl
+               slime-mrepl 
+               slime-asdf 
+               slime-sprof 
+               slime-compiler-notes-tree 
+               slime-hyperdoc 
+               slime-indentation 
+               slime-media 
+               slime-fancy)) 
 
 #+end_src
 
