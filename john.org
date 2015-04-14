@@ -642,7 +642,10 @@ And the rest of the js2 config:
 
 #+begin_src emacs-lisp
 (use-package magit
-  :ensure magit)
+  :ensure magit
+  :init
+   (progn 
+     (setq magit-last-seen-setup-instructions "1.4.0")))
 #+end_src
 
 The proper way to implement this is probably to patch or override the
