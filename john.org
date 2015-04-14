@@ -235,32 +235,6 @@ Lazy people like me never want to type "yes" when "y" will suffice.
     :init (miniedit-install))
 #+end_src
 
-*** Undo tree mode - visualize your undos and branches
-
-People often struggle with the Emacs undo model, where there's really no concept of "redo" - you simply undo the undo. 
-
-This lets you use =C-x u= (=undo-tree-visualize=) to visually walk through the changes you've made, undo back to a certain point (or redo), and go down different branches.
-
-#+begin_src emacs-lisp
-  (use-package undo-tree
-    :init
-    (progn
-      (global-undo-tree-mode)
-      (setq undo-tree-visualizer-timestamps t)
-      (setq undo-tree-visualizer-diff t)))
-#+end_src
-
-*** Help - guide-key
-
-It's hard to remember keyboard shortcuts. The =guide-key= package pops up help after a short delay.
-
-#+begin_src emacs-lisp
-(use-package guide-key
-  :init
-  (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
-  (guide-key-mode 1))  ; Enable guide-key-mode
-#+end_src
-
 *** UTF-8
 
 From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.html
@@ -409,73 +383,6 @@ register. Using registers for all these file shortcuts is probably a bit of a wa
      (?l . "~/dropbox/public/sharing/learning.org")))
 #+end_src
 
-*** Key chords 
-I'm on a Dvorak keyboard, so these might not work for you.
-Experimenting with this. =key-chord= lets you define keyboard
-shortcuts that use ordinary keys.
-
-Some code from http://emacsredux.com/blog/2013/04/28/switch-to-previous-buffer/
-#+begin_src emacs-lisp
-  (defun sacha/key-chord-define (keymap keys command)
-    "Define in KEYMAP, a key-chord of two keys in KEYS starting a COMMAND.
-  \nKEYS can be a string or a vector of two elements. Currently only elements
-  that corresponds to ascii codes in the range 32 to 126 can be used.
-  \nCOMMAND can be an interactive function, a string, or nil.
-  If COMMAND is nil, the key-chord is removed.
-
-  MODIFICATION: Do not define the transposed key chord.
-  "
-    (if (/= 2 (length keys))
-        (error "Key-chord keys must have two elements"))
-    ;; Exotic chars in a string are >255 but define-key wants 128..255 for those
-    (let ((key1 (logand 255 (aref keys 0)))
-          (key2 (logand 255 (aref keys 1))))
-      (define-key keymap (vector 'key-chord key1 key2) command)))
-  (fset 'key-chord-define 'sacha/key-chord-define)
-
-  (defun sacha/switch-to-previous-buffer ()
-    "Switch to previously open buffer.
-  Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-  (defun sacha/org-check-agenda ()
-    "Peek at agenda."
-    (interactive)
-    (cond
-     ((derived-mode-p 'org-agenda-mode)
-      (if (window-parent) (delete-window) (bury-buffer)))
-     ((get-buffer "*Org Agenda*")
-      (switch-to-buffer-other-window "*Org Agenda*"))
-     (t (org-agenda nil "a"))))
-
-  (defvar sacha/key-chord-command-map (make-sparse-keymap))
-  (bind-key "h" 'sacha/org-check-agenda sacha/key-chord-command-map)
-  (bind-key "u" 'emms-pause sacha/key-chord-command-map)
-  (bind-key "t" 'emms-seek-forward sacha/key-chord-command-map)
-  (bind-key "n" 'emms-seek-to sacha/key-chord-command-map)
-    
-  (use-package key-chord
-    :init
-    (progn 
-      (fset 'key-chord-define 'sacha/key-chord-define)
-      (key-chord-mode 1)
-      ;; k can be bound too
-      (key-chord-define-global "uu"     'undo)
-      (key-chord-define-global "yy"     'browse-kill-ring)
-      (key-chord-define-global "jj"     'ace-jump-word-mode)
-      (key-chord-define-global "jw"     'ace-window)
-      (key-chord-define-global "jl"     'ace-jump-line-mode)
-      (key-chord-define-global "jz"     'ace-jump-zap-up-to-char)
-      (key-chord-define-global "jZ"     'ace-jump-zap-to-char)
-      (key-chord-define-global "FF"     'find-file)
-      (key-chord-define-global "qq"     'sacha/org-quick-clock-in-task)
-      (key-chord-define-global "hh"     sacha/key-chord-command-map)
-      (key-chord-define-global "hc"     'emms-seek-forward)
-;      (key-chord-define-global "h-"     nil)  ; It turns out I type h- a lot!
-      (key-chord-define-global "xx"     'er/expand-region)
-      (key-chord-define-global "JJ"     'sacha/switch-to-previous-buffer)))
-#+end_src
 *** Smartscan
 
 From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
