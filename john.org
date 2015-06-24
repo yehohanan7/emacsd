@@ -257,6 +257,19 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
           (line-beginning-position 2)))))
 #+end_src
 ** Navigation
+*** Cursor movements
+Move faster between lines
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-S-n")
+    (lambda () (interactive) (next-line 5)))
+
+(global-set-key (kbd "C-S-p")
+    (lambda () (interactive) (next-line -5)))
+
+#+end_src
+
+
 *** Pop to mark
 
 Handy way of getting back to previous places.
