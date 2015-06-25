@@ -269,7 +269,6 @@ Move faster between lines
 
 #+end_src
 
-
 *** Pop to mark
 
 Handy way of getting back to previous places.
@@ -314,12 +313,8 @@ Windmove lets you move between windows with something more natural than cycling 
 Windmove doesn't behave well with Org, so we need to use different keybindings.
 
 #+begin_src emacs-lisp
-  (use-package windmove
-    :bind
-    (("<f2> <right>" . windmove-right)
-     ("<f2> <left>" . windmove-left)
-     ("<f2> <up>" . windmove-up)
-     ("<f2> <down>" . windmove-down)))
+(use-package windmove)
+(windmove-default-keybindings)
 #+end_src
 *** Make window splitting more useful
 
