@@ -256,6 +256,13 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
         (list (line-beginning-position)
           (line-beginning-position 2)))))
 #+end_src
+*** exec path
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :ensure exec-path-from-shell
+  :init (exec-path-from-shell-initialize))
+#+end_src
+
 ** Navigation
 *** Cursor movements
 Move faster between lines
@@ -832,6 +839,15 @@ with HTTPS sites.
 
 #+end_src
 
+*** python
+#+begin_src emacs-lisp
+(use-package jedi
+   :ensure jedi
+   :init (progn 
+            (add-hook 'python-mode-hook 'jedi:setup)
+            (setq jedi:complete-on-dot t)))
+#+end_src
+    
 ** Writing
 #+begin_src emacs-lisp
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
@@ -906,3 +922,11 @@ with HTTPS sites.
      (use-package org-toodledo
        :ensure org-toodledo)
    #+end_src
+** Protocol tools
+*** http
+#+begin_src emacs-lisp
+(use-package restclient
+  :ensure restclient
+  :init (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
+#+end_src
+
