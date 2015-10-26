@@ -971,4 +971,8 @@ with HTTPS sites.
             (define-key term-raw-map (kbd "C-y") 'term-paste)))
 
 
+;; disable yas mode in terminal
+(add-hook 'term-mode-hook (lambda()
+                (yas-minor-mode -1)))
+
 #+end_src
