@@ -598,14 +598,12 @@ More things that I need to get used to...
 #+end_src
 
 *** Show column number
-
-I sometimes need to know where I am in a line.
-    #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (column-number-mode 1)
 #+end_src
 
 *** Don't show whitespace in diff, but show context
-    #+begin_src emacs-lisp
+#+begin_src emacs-lisp
     (setq vc-diff-switches '("-b" "-B" "-u"))
 #+end_src
 *** Javascript
@@ -971,5 +969,6 @@ with HTTPS sites.
 (add-hook 'term-mode-hook
           (lambda ()
             (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
 
 #+end_src
