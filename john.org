@@ -858,8 +858,9 @@ with HTTPS sites.
      (use-package erc
        :ensure erc
        :config
-       (setq erc-autojoin-channels-alist '(("freenode.net"
-					    "#erlang"
+       (setq erc-autojoin-channels-alist '((
+              "#kafka"
+              "#lisp"
 					    "#emacs"))
 	     erc-server "irc.freenode.net"
 	     erc-nick "maveneagle"))
