@@ -489,6 +489,13 @@ From http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
    ("C-x n n" . recursive-narrow-or-widen-dwim)))
 #+end_src
 
+*** Closing buffers
+#+begin_src emacs-lisp
+(defun kill-other-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
+
 ** Coding
 *** Tab width of 2 is compact and readable
 #+begin_src emacs-lisp
