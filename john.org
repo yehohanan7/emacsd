@@ -918,16 +918,14 @@ with HTTPS sites.
 ;;(use-package ample-zen-theme
 ;;  :ensure ample-zen-theme)
 
-;;(use-package zenburn-theme
-;;    :ensure zenburn-theme)
+(use-package zenburn-theme
+    :ensure zenburn-theme)
 
-(use-package color-theme :ensure t)
-(use-package color-theme-solarized :ensure t)
-(color-theme-solarized-dark)
-
+;(use-package color-theme :ensure t)
+;(use-package color-theme-solarized :ensure t)
+;(color-theme-solarized-dark)
 
 #+end_src
-
 
 ** Productivity
 *** Toodledo
