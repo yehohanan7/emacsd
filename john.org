@@ -5,7 +5,6 @@
 ** Ergonomics
 ** Emacs initialization
 *** Add load paths
-
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/elisp")
 (add-to-list 'load-path "~/elisp/artbollocks-mode")
