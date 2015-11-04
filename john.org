@@ -1,7 +1,6 @@
 #+TITLE: My Emacs Configuration
 #+OPTIONS: toc:4 h:4
 
-
 * Configuration
 ** Ergonomics
 ** Emacs initialization
