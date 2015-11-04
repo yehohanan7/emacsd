@@ -31,7 +31,6 @@ after adding these for the first time.
 #+begin_src emacs-lisp
 (require 'fortune)
 (require 'proxy-activate)
-
 '(proxy-activate)
 #+end_src
 
