@@ -296,18 +296,12 @@ This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= t
    :ensure helm-swoop
    :bind
    (("C-S-s" . helm-swoop)
-    ("M-i" . helm-swoop)
-    ("M-s s" . helm-swoop)
-    ("M-s M-s" . helm-swoop)
     ("M-I" . helm-swoop-back-to-last-point)
-    ("C-c M-i" . helm-multi-swoop)
-    ("C-x M-i" . helm-multi-swoop-all)
-    )
+    ("C-x C-S-s" . helm-multi-swoop-all))
    :config
    (progn
      (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-     (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop))
-  )
+     (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)))
 #+end_src
 
 *** Windmove - switching between windows
