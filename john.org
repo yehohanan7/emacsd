@@ -293,12 +293,8 @@ Handy way of getting back to previous places.
    :ensure helm-swoop
    :bind
    (("C-S-s" . helm-swoop)
-    ("M-I" . helm-swoop-back-to-last-point)
-    ("C-x C-S-s" . helm-multi-swoop-all))
-   :config
-   (progn
-     (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-     (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)))
+    ("C-S-r" . helm-swoop-back-to-last-point)
+    ("C-x C-S-s" . helm-multi-swoop-all)))
 #+end_src
 
 *** Windmove - switching between windows
