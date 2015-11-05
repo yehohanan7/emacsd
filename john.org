@@ -288,9 +288,6 @@ Handy way of getting back to previous places.
 #+end_src
 
 *** Helm-swoop - quickly finding lines
-
-This promises to be a fast way to find things. Let's bind it to =Ctrl-Shift-S= to see if I can get used to that...
-
 #+begin_src emacs-lisp
   (use-package helm-swoop
    :ensure helm-swoop
@@ -863,10 +860,8 @@ with HTTPS sites.
 	     erc-nick "maveneagle"))
    #+end_src
 
-** Multiple Editing Editing
-
+** Multiple Editing
 #+begin_src emacs-lisp
-
 (use-package multiple-cursors
   :ensure multiple-cursors
   :bind 
