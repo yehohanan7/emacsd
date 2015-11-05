@@ -76,37 +76,14 @@ From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.htm
         regexp-search-ring))
 #+end_src
 
-*** Windows configuration :drill:
-    SCHEDULED: <2013-03-03 Sun>
-    :PROPERTIES:
-    :ID:       440c0b9a-9068-450b-89a3-a20c8ec1f447
-    :DRILL_LAST_INTERVAL: 3.86
-    :DRILL_REPEATS_SINCE_FAIL: 2
-    :DRILL_TOTAL_REPEATS: 1
-    :DRILL_FAILURE_COUNT: 0
-    :DRILL_AVERAGE_QUALITY: 3.0
-    :DRILL_EASE: 2.36
-    :DRILL_LAST_QUALITY: 3
-    :DRILL_LAST_REVIEWED: [2013-02-27 Wed 23:14]
-    :END:
-
-When you're starting out, tooltips, menus, and the tool bar can be very helpful. [[http://sachachua.com/blog/2014/03/emacs-basics-using-mouse/][(Emacs Basics: Using the Mouse]]). Eventually, you may want to reclaim that extra little bit of screenspace. The following code turns those things off when using a graphical Emacs.
-
+*** Windows configuration
+Remove tooltip, toolbar etc
 #+begin_src emacs-lisp
 (when window-system
   (tooltip-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1))
-#+end_src
-*** Winner mode - undo and redo window configuration
-
-=winner-mode= lets you use =C-c <left>= and =C-c <right>= to switch between window configurations. This is handy when something has popped up a buffer that you want to look at briefly before returning to whatever you were working on. When you're done, press =C-c <left>=.
-
-#+begin_src emacs-lisp
-  (use-package winner
-    :ensure winner
-    :init (winner-mode 1))
 #+end_src
 *** Sentences end with a single space
 
@@ -118,11 +95,6 @@ sentence navigation commands work for me.
 #+end_src
 
 *** Helm - interactive completion
-
-Helm makes it easy to complete various things. I find it to be easier
-to configure than ido in order to get completion in as many places as
-possible, although I prefer ido's way of switching buffers.
-
 #+begin_src emacs-lisp
     (use-package helm
       :ensure helm
@@ -154,18 +126,8 @@ possible, although I prefer ido's way of switching buffers.
              ("M-x" . helm-M-x)
              ("C-x c o" . helm-occur)
              ("C-x c s" . helm-swoop)
-             ("C-x c b" . sacha/helm-do-grep-book-notes)
              ("C-x c SPC" . helm-all-mark-rings)))
     (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
-#+end_src
-
-helm-grep? Bit slow and hard to read, though.
-#+begin_src emacs-lisp
-(defvar sacha/book-notes-directory "~/Dropbox/books")
-(defun sacha/helm-do-grep-book-notes ()
-  "Search my book notes."
-  (interactive)
-  (helm-do-grep-1 (list sacha/book-notes-directory)))
 #+end_src
 
 *** Mode line format
@@ -260,18 +222,6 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
 #+end_src
 
 ** Navigation
-*** Cursor movements
-Move faster between lines
-
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-S-n")
-    (lambda () (interactive) (next-line 5)))
-
-(global-set-key (kbd "C-S-p")
-    (lambda () (interactive) (next-line -5)))
-
-#+end_src
-
 *** Pop to mark
 
 Handy way of getting back to previous places.
@@ -281,7 +231,6 @@ Handy way of getting back to previous places.
 (setq set-mark-command-repeat-pop t)
 #+end_src
 *** Text size
-
 #+begin_src emacs-lisp
 (bind-key "C-+" 'text-scale-increase)
 (bind-key "C--" 'text-scale-decrease)
@@ -297,15 +246,6 @@ Handy way of getting back to previous places.
     ("C-x C-S-s" . helm-multi-swoop-all)))
 #+end_src
 
-*** Windmove - switching between windows
-
-Windmove lets you move between windows with something more natural than cycling through =C-x o= (=other-window=).
-Windmove doesn't behave well with Org, so we need to use different keybindings.
-
-#+begin_src emacs-lisp
-(use-package windmove)
-(windmove-default-keybindings)
-#+end_src
 *** Make window splitting more useful
 
 Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury
@@ -326,70 +266,6 @@ Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tri
 (bind-key "C-x 2" 'sacha/vsplit-last-buffer)
 (bind-key "C-x 3" 'sacha/hsplit-last-buffer)
 
-#+end_src
-*** Searching based on the current word
-
-This lets me search up and down. I don't use this often, though.
-
-#+begin_src emacs-lisp
-  (defun sacha/search-word-backward ()
-    "Find the previous occurrence of the current word."
-    (interactive)
-    (let ((cur (point)))
-      (skip-syntax-backward "w_")
-      (goto-char
-       (if (re-search-backward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
-  
-  (defun sacha/search-word-forward ()
-    "Find the next occurrence of the current word."
-    (interactive)
-    (let ((cur (point)))
-      (skip-syntax-forward "w_")
-      (goto-char
-       (if (re-search-forward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
-  (defadvice search-for-keyword (around sacha activate)
-    "Match in a case-insensitive way."
-    (let ((case-fold-search t))
-      ad-do-it))
-  (global-set-key '[M-up] 'sacha/search-word-backward)
-  (global-set-key '[M-down] 'sacha/search-word-forward)
-#+end_src
-
-*** Frequently-accessed files
-Registers allow you to jump to a file or other location quickly. To
-jump to a register, use =C-x r j= followed by the letter of the
-register. Using registers for all these file shortcuts is probably a bit of a waste since I can easily define my own keymap, but since I rarely go beyond register A anyway...
-
-#+begin_src emacs-lisp :results silent
-  (mapcar
-   (lambda (r)
-     (set-register (car r) (cons 'file (cdr r))))
-   '((?i . "~/.emacs.d/Sacha.org")
-     (?o . "~/personal/organizer.org")
-     (?b . "~/personal/business.org")
-     (?B . "~/Dropbox/books")
-     (?e . "~/code/dev/emacs-notes/tasks.org")
-     (?w . "~/Dropbox/public/sharing/index.org")
-     (?W . "~/Dropbox/public/sharing/blog.org")
-     (?j . "~/personal/journal.org")
-     (?I . "~/Dropbox/Inbox/To Blog")
-     (?g . "~/sachac.github.io/evil-plans/index.org")
-     (?c . "~/code/dev/elisp-course.org")
-     (?l . "~/dropbox/public/sharing/learning.org")))
-#+end_src
-
-*** Smartscan
-
-From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
-
-#+begin_src emacs-lisp
-(use-package smartscan
-  :config
-  (smartscan-mode 1))
 #+end_src
 *** Dired
 
@@ -470,13 +346,6 @@ From http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
   :bind
   (("C-x n w" . recursive-widen)
    ("C-x n n" . recursive-narrow-or-widen-dwim)))
-#+end_src
-
-*** Closing buffers
-#+begin_src emacs-lisp
-(defun kill-other-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
 
 ** Coding
@@ -841,21 +710,6 @@ with HTTPS sites.
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
 #+end_src
 
-** Internet Relay Chat
-
-   IRC is a great way to hang out with other Emacs geeks.
-   #+begin_src emacs-lisp
-     (use-package erc
-       :ensure erc
-       :config
-       (setq erc-autojoin-channels-alist '((
-              "#kafka"
-              "#lisp"
-					    "#emacs"))
-	     erc-server "irc.freenode.net"
-	     erc-nick "maveneagle"))
-   #+end_src
-
 ** Multiple Editing
 #+begin_src emacs-lisp
 (use-package multiple-cursors
@@ -977,17 +831,29 @@ with HTTPS sites.
 
 #+end_src
 ** Social
+*** Internet Relay Chat
+   #+begin_src emacs-lisp
+     (use-package erc
+       :ensure erc
+       :config
+       (setq erc-autojoin-channels-alist '((
+              "#kafka"
+              "#lisp"
+					    "#emacs"))
+	     erc-server "irc.freenode.net"
+	     erc-nick "maveneagle"))
+   #+end_src
+
 *** Hacker news
 #+begin_src emacs-lisp
 (use-package hackernews
   :ensure hackernews)
-
 #+end_src
 
 ** Custom
-*** Navigation inside buffer
+*** Buffer navigation
+Copy entire buffer
 #+begin_src emacs-lisp
-
 (global-set-key (kbd "C-S-h") 
   (lambda ()
     "Copy the entire buffer"
@@ -997,4 +863,19 @@ with HTTPS sites.
 
 #+end_src
 
+Move faster between lines
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-S-n")
+    (lambda () (interactive) (next-line 5)))
 
+(global-set-key (kbd "C-S-p")
+    (lambda () (interactive) (next-line -5)))
+
+#+end_src
+
+*** Closing buffers
+#+begin_src emacs-lisp
+(defun kill-other-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
