@@ -976,6 +976,14 @@ with HTTPS sites.
                 (yas-minor-mode -1)))
 
 #+end_src
+** Social
+*** Hacker news
+#+begin_src emacs-lisp
+(use-package hackernews
+  :ensure hackernews)
+
+#+end_src
+
 ** Custom
 *** Navigation inside buffer
 #+begin_src emacs-lisp
