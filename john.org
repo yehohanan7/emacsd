@@ -991,3 +991,15 @@ with HTTPS sites.
                 (yas-minor-mode -1)))
 
 #+end_src
+** Custom
+*** Navigation inside buffer
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-S-a") 
+  (lambda ()
+    "Selects from begining of the buffer to the current cursor position"
+    (interactive)
+    (push-mark (point-min) nil t)
+    (goto-char (point))))
+#+end_src
+
+
