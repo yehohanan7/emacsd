@@ -994,12 +994,14 @@ with HTTPS sites.
 ** Custom
 *** Navigation inside buffer
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-S-a") 
+
+(global-set-key (kbd "C-S-h") 
   (lambda ()
-    "Selects from begining of the buffer to the current cursor position"
+    "Copy the entire buffer"
     (interactive)
-    (push-mark (point-min) nil t)
-    (goto-char (point))))
+    (kill-ring-save (point-min) (point-max))
+    (message "buffer copied")))
+
 #+end_src
 
 
