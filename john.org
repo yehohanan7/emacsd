@@ -446,14 +446,9 @@ More things that I need to get used to...
 *** Snippets
 
 #+begin_src emacs-lisp
-
 (use-package yasnippet
   :ensure yasnippet)
 (yas-global-mode 1)
-(setq yas-snippet-dirs (append yas-snippet-dirs
-                          '("~/.emacs.d/custom/john/snippets")))
-(yas-reload-all)
-
 #+end_src
 
 *** Show column number
