@@ -11,7 +11,6 @@
 (add-to-list 'load-path "~/.emacs.d/custom/emacs-elixir/")
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
 (add-to-list 'load-path "~/.emacs.d/slime/")
 (setq org-agenda-files '("~/Dropbox/notes/"))
 #+end_src
@@ -275,37 +274,6 @@ From http://www.masteringemacs.org/articles/2011/03/25/working-multiple-files-di
 (require 'find-dired)
 (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
 #+end_src
-*** Move to beginning of line
-Copied from http://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
-
-#+begin_src emacs-lisp
-(defun sacha/smarter-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
-
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-;; remap C-a to `smarter-move-beginning-of-line'
-(global-set-key [remap move-beginning-of-line]
-                'sacha/smarter-move-beginning-of-line)
-#+end_src
 *** Recent files
 
 #+begin_src emacs-lisp
@@ -329,23 +297,6 @@ https://github.com/bbatsov/prelude
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
-#+end_src
-*** Narrowing
-
-From http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
-#+begin_src emacs-lisp
-(add-to-list 'load-path "~/elisp/recursive-narrow")
-(defun sacha/recursive-narrow-dwim-org ()
-    (if (derived-mode-p 'org-mode) 
-         (cond ((or (org-at-block-p) (org-in-src-block-p)) (org-narrow-to-block))
-               (t (org-narrow-to-subtree))))
-)
-(use-package recursive-narrow
-  :config
-  (add-hook 'recursive-narrow-dwim-functions 'sacha/recursive-narrow-dwim-org)
-  :bind
-  (("C-x n w" . recursive-widen)
-   ("C-x n n" . recursive-narrow-or-widen-dwim)))
 #+end_src
 
 ** Coding
@@ -658,7 +609,6 @@ with HTTPS sites.
 
 **** cider & paredit configs
 #+begin_src emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/org-mode/lisp")
 (use-package ob-clojure)
 
 (setq org-babel-clojure-backend 'cider)
