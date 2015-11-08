@@ -2,7 +2,6 @@
 #+OPTIONS: toc:4 h:4
 
 * Configuration
-** Ergonomics
 ** Emacs initialization
 *** Add load paths
 #+begin_src emacs-lisp
@@ -219,6 +218,20 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
   :ensure exec-path-from-shell
   :init (exec-path-from-shell-initialize))
 #+end_src
+
+*** Drag stuff
+
+#+begin_src emacs-lisp
+(use-package drag-stuff
+  :ensure drag-stuff
+  :init 
+  (progn 
+    (drag-stuff-global-mode 1)
+    (add-hook 'org-mode-hook (lambda() (drag-stuff-mode -1)))))
+
+
+#+end_src
+
 
 ** Navigation
 *** Pop to mark
