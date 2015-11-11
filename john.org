@@ -232,7 +232,6 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
 
 #+end_src
 
-
 ** Navigation
 *** Pop to mark
 
@@ -807,6 +806,15 @@ with HTTPS sites.
 (use-package hackernews
   :ensure hackernews)
 #+end_src
+
+** Machine Learning
+
+*** Ipython Notebook
+#+begin_src emacs-lisp
+(use-package ein
+  :ensure ein)
+#+end_src
+
 
 ** Custom
 *** Buffer navigation
