@@ -1,4 +1,6 @@
-
+* Elisp snippets
+** Pascal triangle
+#+begin_src emacs-lisp
 (defun print-elements (xs)
   (while xs
     (print (car xs))
@@ -17,7 +19,6 @@
     (dotimes (nnumber n)
       (print row)
       (setq row (gen-row row)))))
-
-(pascal 5)
+#+end_src
 
 
