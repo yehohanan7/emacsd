@@ -263,7 +263,7 @@ Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tri
 #+begin_src emacs-lisp
 (defun sacha/vsplit-last-buffer (prefix)
   "Split the window vertically and display the previous buffer."
-  (interactive "p")
+  (interactivne "p")
   (split-window-vertically)
   (other-window 1 nil)
   (unless prefix
@@ -845,3 +845,22 @@ Move faster between lines
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
+** Utilities
+*** External utilities
+String Utility
+#+begin_src emacs-lisp
+(use-package s
+  :ensure s)
+#+end_src
+
+Name spaces
+#+begin_src emacs-lisp
+(use-package names
+  :ensure names)
+#+end_src
+
+*** Custom utilities
+#+begin_src emacs-lisp
+(load-file "~/.emacs.d/custom/aws/aws.el")
+#+end_src
+
