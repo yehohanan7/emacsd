@@ -25,12 +25,13 @@
 
 (defun print-instance (instance)
   (let ((id (gethash "InstanceId" instance))
+        (group (gethash "GroupName" (aref (gethash "SecurityGroups" instance) 0)))
         (name (gethash "KeyName" instance))
         (state (gethash "Name" (gethash "State" instance)))
         (ip (gethash "PrivateIpAddress" instance))
         (launch-time (gethash "LaunchTime" instance))
         (type (gethash "InstanceType" instance)))
-    (print (s-join "   " (list id type name state ip launch-time)))))
+    (print (s-join "   " (list id type name state ip group launch-time)))))
 
 (defun print-reservation (reservation)
   (let ((instances (gethash "Instances" reservation)))
