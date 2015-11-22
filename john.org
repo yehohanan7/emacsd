@@ -414,6 +414,8 @@ More things that I need to get used to...
 (use-package yasnippet
   :ensure yasnippet)
 (yas-global-mode 1)
+
+(setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacsd/snippets")))
 #+end_src
 
 *** Show column number
