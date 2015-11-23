@@ -23,9 +23,14 @@
   (let* ((json-object-type 'hash-table))
     (json-read-from-string json)))
 
+(defun group-name (instance)
+  (let ((security-groups (gethash "SecurityGroups" instance)))
+    (when (> (length security-groups) 0)
+      (gethash "GroupName" (aref security-groups 0)))))
+
 (defun print-instance (instance)
   (let ((id (gethash "InstanceId" instance))
-        (group (gethash "GroupName" (aref (gethash "SecurityGroups" instance) 0)))
+        (group (group-name instance))
         (name (gethash "KeyName" instance))
         (state (gethash "Name" (gethash "State" instance)))
         (ip (gethash "PrivateIpAddress" instance))
@@ -56,3 +61,5 @@
     (with-temp-buffer
       (dolist (region aws-regions)
         (print-output region (ec2 command region profile))))))
+
+
