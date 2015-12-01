@@ -744,6 +744,7 @@ with HTTPS sites.
 #+end_src
 
 ** Terminal
+*** Multi term
 #+begin_src emacs-lisp
 (use-package multi-term
   :ensure multi-term)
@@ -797,6 +798,11 @@ with HTTPS sites.
                 (yas-minor-mode -1)))
 
 #+end_src
+*** Start emacs server on startup
+#+begin_src emacs-lisp
+(server-start)
+#+end_src
+
 ** Social
 *** Internet Relay Chat
    #+begin_src emacs-lisp
