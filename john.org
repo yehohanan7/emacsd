@@ -704,16 +704,6 @@ with HTTPS sites.
 
 #+end_src
 
-** Web browsing
-
-	 Minor tweak for Firefox on Windows. Otherwise I get "Searching for
-	 program" "permission denied" "firefox".
-	 
-	 #+begin_src emacs-lisp
-	 (setq browse-url-firefox-program
-         "C:/Program Files (x86)/Mozilla Firefox/firefox.exe")
-	 #+end_src
-
 ** Themes
 #+begin_src emacs-lisp
 
@@ -730,11 +720,6 @@ with HTTPS sites.
 #+end_src
 
 ** Productivity
-*** Toodledo
-   #+begin_src emacs-lisp
-     (use-package org-toodledo
-       :ensure org-toodledo)
-   #+end_src
 ** Http
 *** Rest client
 #+begin_src emacs-lisp
