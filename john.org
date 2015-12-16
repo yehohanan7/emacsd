@@ -319,28 +319,11 @@ https://github.com/bbatsov/prelude
     (setq-default tab-width 2)
 #+end_src
 *** New lines are always indented
-
-I almost always want to go to the right indentation on the next line.
 #+begin_src emacs-lisp
 (global-set-key (kbd "RET") 'newline-and-indent)
 #+end_src
 
-*** Adapt to being on Windows
-
-I'm on Windows, so I use Cygwin to add Unix-y tools to make my life easier. 
-These config snippets seem to help too.
-#+begin_src emacs-lisp
-  (setenv "CYGWIN" "nodosfilewarning")
-  (add-hook 'comint-output-filter-functions
-      'shell-strip-ctrl-m nil t)
-  (add-hook 'comint-output-filter-functions
-      'comint-watch-for-password-prompt nil t)
-#+end_src
-
 *** Expand region
-
-This is something I have to get the hang of too. It gradually expands the selection. Handy for Emacs Lisp.
-
 #+begin_src emacs-lisp
   (use-package expand-region
     :ensure expand-region
@@ -474,14 +457,15 @@ And the rest of the js2 config:
           (bind-key "C-c l" 'js-load-file-and-go js2-mode-map)))
 #+end_src
 
-*** Magit - nice git interface
-
+*** TODO Magit - nice git interface
 #+begin_src emacs-lisp
 (use-package magit
   :ensure magit
   :init
    (progn 
      (setq magit-last-seen-setup-instructions "1.4.0")))
+
+(global-set-key (kbd "C-S-g") #'magit-status)
 #+end_src
 
 The proper way to implement this is probably to patch or override the
