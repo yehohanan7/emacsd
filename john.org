@@ -849,3 +849,11 @@ Name spaces
 (load-file "~/.emacs.d/custom/aws/aws.el")
 #+end_src
 
+** shell
+#+begin_src emacs-lisp
+(defun eshell/clear ()
+  "Clear the eshell buffer."
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (eshell-send-input)))
+#+end_src
