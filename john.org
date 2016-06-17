@@ -638,7 +638,7 @@ with HTTPS sites.
                slime-indentation 
                slime-media 
                slime-fancy)) 
-
+(add-hook 'lisp-mode-hook '(lambda () (paredit-mode)))
 #+end_src
 
 *** python
