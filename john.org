@@ -83,6 +83,7 @@ Remove tooltip, toolbar etc
   (menu-bar-mode -1)
   (scroll-bar-mode -1))
 #+end_src
+
 *** Sentences end with a single space
 
 In my world, sentences end with a single space. This makes
@@ -280,13 +281,17 @@ Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tri
 (bind-key "C-x 3" 'sacha/hsplit-last-buffer)
 
 #+end_src
-*** Dired
-
-From http://www.masteringemacs.org/articles/2011/03/25/working-multiple-files-dired/
+*** Directory tree
 
 #+begin_src emacs-lisp
-(require 'find-dired)
-(setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+(use-package dirtree
+  :ensure dirtree)
+
+(use-package neotree
+  :ensure neotree
+  :config
+   (global-set-key [f8] 'neotree-toggle))
+
 #+end_src
 *** Recent files
 
@@ -399,6 +404,7 @@ More things that I need to get used to...
 (yas-global-mode 1)
 
 (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacsd/snippets")))
+
 #+end_src
 
 *** Show column number
@@ -656,6 +662,27 @@ with HTTPS sites.
    :ensure haskell-mode)
 #+end_src
 
+*** Scala
+#+begin_src emacs-lisp
+(use-package scala-mode
+   :ensure scala-mode)
+
+(use-package ensime
+   :ensure ensime
+   :bind 
+   (("C-S-t" . ensime-goto-test)
+    ("C-S-i" . ensime-goto-impl)))
+
+(use-package whitespace
+   :ensure whitespace)
+
+(add-hook 'scala-mode-hook '(lambda ()
+  (yas-minor-mode)))
+
+(global-set-key (kbd "<backtab>") 'yas-expand)
+
+#+end_src
+
 ** Writing
 #+begin_src emacs-lisp
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
@@ -694,11 +721,11 @@ with HTTPS sites.
 ;;(use-package ample-zen-theme
 ;;  :ensure ample-zen-theme)
 
-(use-package zenburn-theme
-    :ensure zenburn-theme)
+;;(use-package zenburn-theme
+;;    :ensure zenburn-theme)
 
 ;(use-package color-theme :ensure t)
-;(use-package color-theme-solarized :ensure t)
+(use-package monokai-theme :ensure t)
 ;(color-theme-solarized-dark)
 
 #+end_src
@@ -846,7 +873,7 @@ Name spaces
 
 *** Custom utilities
 #+begin_src emacs-lisp
-(load-file "~/.emacs.d/custom/aws/aws.el")
+'(load-file "~/.emacs.d/custom/aws/aws.el")
 #+end_src
 
 ** shell
