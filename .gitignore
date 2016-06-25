@@ -9,3 +9,8 @@ places
 recentf
 projectile-bookmarks.eld
 TAGS
+.mc-lists.el
+ac-comphist.dat
+ensime
+eshell
+
