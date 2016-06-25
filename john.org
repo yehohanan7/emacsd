@@ -673,13 +673,11 @@ with HTTPS sites.
    (("C-S-t" . ensime-goto-test)
     ("C-S-i" . ensime-goto-impl)))
 
-(use-package whitespace
-   :ensure whitespace)
-
 (add-hook 'scala-mode-hook '(lambda ()
-  (yas-minor-mode)))
+  (yas-minor-mode)
+  (local-set-key (kbd "<backtab>") 'yas-expand)))
 
-(global-set-key (kbd "<backtab>") 'yas-expand)
+(add-hook 'before-save-hook 'ensime-format-source)
 
 #+end_src
 
