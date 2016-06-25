@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+#Author : John
+#name : eq
+# key: eq
+# --
+final override def equals(other: Any) = {
+  value that = other.asInstanceOf[$1]
+  if (that == null) false  else $0
+}

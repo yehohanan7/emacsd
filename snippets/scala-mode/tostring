@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#Author : John
+#name : tostring
+# key: tostr
+# --
+override def toString = {
+  $0
+}
