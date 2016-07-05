@@ -11,7 +11,7 @@
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (add-to-list 'load-path "~/.emacs.d/slime/")
-(setq org-agenda-files '("~/Dropbox/notes/"))
+(setq org-agenda-files '("~/hyperspace/"))
 #+end_src
 
 *** Add package sources
@@ -680,6 +680,13 @@ with HTTPS sites.
 (add-hook 'before-save-hook 'ensime-format-source)
 
 #+end_src
+
+*** Go
+#+begin_src emacs-lisp
+(use-package go-mode
+   :ensure go-mode)
+#+end_src
+
 
 ** Writing
 #+begin_src emacs-lisp
