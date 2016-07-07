@@ -685,6 +685,9 @@ with HTTPS sites.
 #+begin_src emacs-lisp
 (use-package go-mode
    :ensure go-mode)
+
+(use-package flymake-go
+   :ensure flymake-go)
 #+end_src
 
 
