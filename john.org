@@ -708,8 +708,8 @@ with HTTPS sites.
    :ensure go-mode
    :bind 
     (("C-c C-r" . go-remove-unused-imports)
-     ("C-c C-k" . godoc)
-     ("C-c C-p" . pop-tag-mark)))
+     ("C-c C-p" . pop-tag-mark)
+     ("C-c C-k" . godoc-at-point)))
 
 (use-package go-autocomplete
    :ensure go-autocomplete
