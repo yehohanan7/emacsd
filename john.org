@@ -323,6 +323,27 @@ https://github.com/bbatsov/prelude
 #+begin_src emacs-lisp
     (setq-default tab-width 2)
 #+end_src
+*** Add new line above/below current cursor
+#+begin_src emacs-lisp
+(defun smart-open-line ()
+  (interactive)
+  (move-end-of-line nil)
+  (newline-and-indent))
+
+(defun smart-open-line-above ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "M-o") 'smart-open-line)
+(global-set-key (kbd "M-O") 'smart-open-line-above)
+#+end_src
+
+#+RESULTS:
+: smart-open-line-above
+
 *** New lines are always indented
 #+begin_src emacs-lisp
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -684,10 +705,30 @@ with HTTPS sites.
 *** Go
 #+begin_src emacs-lisp
 (use-package go-mode
-   :ensure go-mode)
+   :ensure go-mode
+   :bind 
+    (("C-c C-r" . go-remove-unused-imports)
+     ("C-c C-k" . godoc)
+     ("C-c C-p" . pop-tag-mark)))
+
+(use-package go-autocomplete
+   :ensure go-autocomplete
+   :init
+    (progn 
+      (define-key ac-complete-mode-map "\C-n" 'ac-next)
+      (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
+
+
+(use-package go-eldoc
+   :ensure go-eldoc)
 
 (use-package flymake-go
    :ensure flymake-go)
+
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook (lambda () (auto-complete-mode 1)))
 #+end_src
 
 
