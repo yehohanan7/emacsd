@@ -718,17 +718,14 @@ with HTTPS sites.
       (define-key ac-complete-mode-map "\C-n" 'ac-next)
       (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
 
-
 (use-package go-eldoc
    :ensure go-eldoc)
-
-(use-package flymake-go
-   :ensure flymake-go)
-
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook (lambda () (auto-complete-mode 1)))
+
+(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
 #+end_src
 
 
