@@ -319,6 +319,15 @@ https://github.com/bbatsov/prelude
 #+end_src
 
 ** Coding
+*** Kill word under cursor
+#+begin_src emacs-lisp
+(defun kill-word-under-cursor ()
+  (interactive)
+  (backward-word)
+  (kill-word 1))
+(subword-mode)
+(global-set-key (kbd "M-d") 'kill-word-under-cursor)
+#+end_src
 *** Tab width of 2 is compact and readable
 #+begin_src emacs-lisp
     (setq-default tab-width 2)
