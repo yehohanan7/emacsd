@@ -713,12 +713,18 @@ with HTTPS sites.
 
 *** Go
 #+begin_src emacs-lisp
+(setenv "GOROOT" "/usr/local/go")
+(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
+
 (use-package go-mode
    :ensure go-mode
    :bind 
     (("C-c C-r" . go-remove-unused-imports)
      ("C-c C-p" . pop-tag-mark)
      ("C-c C-k" . godoc-at-point)))
+
+(use-package go-eldoc
+   :ensure go-eldoc)
 
 (use-package go-autocomplete
    :ensure go-autocomplete
@@ -727,14 +733,16 @@ with HTTPS sites.
       (define-key ac-complete-mode-map "\C-n" 'ac-next)
       (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
 
-(use-package go-eldoc
-   :ensure go-eldoc)
+(defun auto-complete-for-go ()
+  (auto-complete-mode 1))
 
+(with-eval-after-load 'go-mode
+   (require 'go-autocomplete))
+
+(add-hook 'go-mode-hook 'auto-complete-for-go)
 (add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'before-save-hook 'gofmt-mode-setup)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'go-mode-hook (lambda () (auto-complete-mode 1)))
-
-(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
 #+end_src
 
 
@@ -905,6 +913,12 @@ Move faster between lines
     (lambda () (interactive) (next-line -5)))
 
 #+end_src
+
+Move faster between words
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-S-f") 'forward-word)
+(global-set-key (kbd "C-S-b") 'backward-word)
+  #+end_src
 
 *** Closing buffers
 #+begin_src emacs-lisp
