@@ -1,3 +1,0 @@
-#name: print
-# --
-fmt.Println($0)

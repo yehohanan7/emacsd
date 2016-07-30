@@ -426,17 +426,6 @@ More things that I need to get used to...
 (define-key emacs-lisp-mode-map (kbd "C-c .") 'find-function-at-point)
 (bind-key "C-c f" 'find-function)
 #+end_src
-*** Snippets
-
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :ensure yasnippet)
-(yas-global-mode 1)
-
-(setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacsd/snippets")))
-
-#+end_src
-
 *** Show column number
 #+begin_src emacs-lisp
 (column-number-mode 1)
@@ -608,13 +597,30 @@ with HTTPS sites.
   :config (skewer-setup))
 #+end_src
 
-*** Autocomplete
-
+*** Autocomplete & snippets
 #+begin_src emacs-lisp
+(use-package yasnippet
+  :ensure yasnippet)
+(yas-global-mode 1)
+(setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacs.d/snippets")))
+
 (use-package company
   :ensure company
   :config
-  (add-hook 'prog-mode-hook 'company-mode))
+  (add-hook 'prog-mode-hook 'company-mode)
+  :init
+  (progn
+    (add-hook 'after-init-hook 'global-company-mode)
+    (global-company-mode)))
+
+(defvar company-mode/enable-yas t "Enable yasnippet for all backends.")
+
+(defun company-mode/backend-with-yas (backend)
+  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+  backend
+  (append (if (consp backend) backend (list backend)) '(:with company-yasnippet))))
+
+(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 #+end_src
 
 *** Yaml mode
@@ -744,7 +750,6 @@ with HTTPS sites.
 (add-hook 'before-save-hook 'gofmt-mode-setup)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 #+end_src
-
 
 ** Writing
 #+begin_src emacs-lisp
