@@ -11,6 +11,8 @@
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (add-to-list 'load-path "~/.emacs.d/slime/")
+(add-to-list 'load-path "~/.emacs.d/mu/mu")
+(add-to-list 'load-path "~/.emacs.d/mu/mu4e")
 (setq org-agenda-files '("~/hyperspace/"))
 #+end_src
 
@@ -959,14 +961,18 @@ Name spaces
     (eshell-send-input)))
 #+end_src
 ** Email
-#+begin_src emacs-lisp
-(setq pop3-leave-mail-on-server t)
+*** Setup mu
+#+begin_src sh
+sudo apt-get install html2text xdg-utils libgmime-2.6-dev libxapian-dev
+git clone https://github.com/djcb/mu
+cd mu && autoreconf -i && ./configure && make
+sudo make install
+#+end_src
 
-(add-to-list 'gnus-secondary-select-methods '(nnml "emc"))
-(setq mail-sources
-      '((pop :server "127.0.0.1" ;; davmail is set up on localhost
-         :port 1110
-         :user "vincej4"
-         :stream network))) ;; by default, davmail don't encrypt mail
+
+#+begin_src emacs-lisp
+(require 'mu4e)
+(setq mu4e-maildir "~/.mail/E")
+
 #+end_src
 
