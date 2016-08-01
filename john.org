@@ -747,8 +747,8 @@ with HTTPS sites.
 
 (add-hook 'go-mode-hook 'auto-complete-for-go)
 (add-hook 'before-save-hook 'gofmt-before-save)
-(add-hook 'before-save-hook 'gofmt-mode-setup)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'before-save-hook 'gofmt-mode-setup)
 #+end_src
 
 ** Writing
@@ -958,3 +958,15 @@ Name spaces
     (erase-buffer)
     (eshell-send-input)))
 #+end_src
+** Email
+#+begin_src emacs-lisp
+(setq pop3-leave-mail-on-server t)
+
+(add-to-list 'gnus-secondary-select-methods '(nnml "emc"))
+(setq mail-sources
+      '((pop :server "127.0.0.1" ;; davmail is set up on localhost
+         :port 1110
+         :user "vincej4"
+         :stream network))) ;; by default, davmail don't encrypt mail
+#+end_src
+
