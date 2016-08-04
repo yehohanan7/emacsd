@@ -30,8 +30,6 @@ after adding these for the first time.
 ** Load custom modules
 #+begin_src emacs-lisp
 (require 'fortune)
-(require 'proxy-activate)
-'(proxy-activate)
 #+end_src
 
 ** Install use-package if not installed
@@ -45,15 +43,12 @@ after adding these for the first time.
 
 ** General configuration
 *** Backups
-
 Store backup files under backup 
-
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 #+end_src
 
 Disk space is cheap. Save lots.
-
 #+begin_src emacs-lisp
 (setq delete-old-versions -1)
 (setq version-control t)
@@ -87,10 +82,6 @@ Remove tooltip, toolbar etc
 #+end_src
 
 *** Sentences end with a single space
-
-In my world, sentences end with a single space. This makes
-sentence navigation commands work for me.
-
 #+begin_src emacs-lisp
   (setq sentence-end-double-space nil)
 #+end_src
@@ -545,47 +536,6 @@ options to add at the end of the command, but that can wait for another time (or
 
 #+end_src
 
-*** Ruby
-
-		#+begin_src emacs-lisp
-    (use-package robe
-      :ensure robe
-      :init
-		  (progn (add-hook 'ruby-mode-hook 'robe-mode)
-             (add-hook 'robe-mode-hook 'ac-robe-setup)
-             (add-hook 'ruby-mode-hook 'auto-complete-mode)))
-		#+end_src
-
-#+begin_src emacs-lisp
-(defun sacha/rspec-verify-single ()
-  "Runs the specified example at the point of the current buffer."
-  (interactive)
-  (rspec-run-single-file
-   (concat 
-     (rspec-spec-file-for (buffer-file-name))
-     ":" 
-     (save-restriction
-               (widen)
-               (number-to-string (line-number-at-pos))))
-   (rspec-core-options)))
-
-(use-package rspec-mode
-  :ensure rspec-mode
-  :config
-  (progn 
-    (setq rspec-command-options "--fail-fast --format documentation")
-    (bind-key "C-c , ," 'rspec-rerun rspec-mode-map)
-    (fset 'rspec-verify-single 'sacha/rspec-verify-single)))
-  
-#+end_src
-
-SASS
-
-#+begin_src emacs-lisp
-(add-hook 'sass-mode-hook
-          (lambda () (setq indent-tabs-mode nil)))
-(setq-default indent-tabs-mode nil)
-#+end_src
 *** Skewer
 
 This lets you send HTML, CSS, and Javascript fragments to Google
@@ -700,25 +650,6 @@ with HTTPS sites.
    :ensure haskell-mode)
 #+end_src
 
-*** Scala
-#+begin_src emacs-lisp
-(use-package scala-mode
-   :ensure scala-mode)
-
-(use-package ensime
-   :ensure ensime
-   :bind 
-   (("C-S-t" . ensime-goto-test)
-    ("C-S-i" . ensime-goto-impl)))
-
-(add-hook 'scala-mode-hook '(lambda ()
-  (yas-minor-mode)
-  (local-set-key (kbd "<backtab>") 'yas-expand)))
-
-(add-hook 'before-save-hook 'ensime-format-source)
-
-#+end_src
-
 *** Go
 #+begin_src emacs-lisp
 (setenv "GOROOT" "/usr/local/go")
@@ -756,6 +687,13 @@ with HTTPS sites.
 ** Writing
 #+begin_src emacs-lisp
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
+#+end_src
+
+*** Org mode
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)))
 #+end_src
 
 ** Multiple Editing
@@ -897,7 +835,6 @@ with HTTPS sites.
   :ensure ein)
 #+end_src
 
-
 ** Custom
 *** Buffer navigation
 Copy entire buffer
@@ -960,19 +897,12 @@ Name spaces
     (erase-buffer)
     (eshell-send-input)))
 #+end_src
-** Email
-*** Setup mu
-#+begin_src sh
-sudo apt-get install html2text xdg-utils libgmime-2.6-dev libxapian-dev
-git clone https://github.com/djcb/mu
-cd mu && autoreconf -i && ./configure && make
-sudo make install
-#+end_src
-
-
+** Presentation
 #+begin_src emacs-lisp
-(require 'mu4e)
-(setq mu4e-maildir "~/.mail/E")
+(use-package org-present
+  :ensure org-present)
 
+(use-package org-presie
+  :ensure org-presie)
 #+end_src
 
