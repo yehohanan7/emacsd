@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: sorts
+# key: sorts
+# --
+
+func ($1 $2) Len() int {
+  $3
+}
+
+func ($1 $2) Less(i, j int) bool {
+  $4
+}
+
+func ($1 $2) Swap(i, j int) {
+  $5
+}
