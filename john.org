@@ -429,9 +429,7 @@ More things that I need to get used to...
     (setq vc-diff-switches '("-b" "-B" "-u"))
 #+end_src
 *** Javascript
-
 This makes script blocks easier to copy:
-
 #+begin_src emacs-lisp
 (defvar sacha/javascript-test-regexp (concat (regexp-quote "/** Testing **/") "\\(.*\n\\)*")
 	"Regular expression matching testing-related code to remove.
@@ -456,9 +454,7 @@ test-related code is detected."
 		 nil)
 		"\n</script>")))
 #+end_src
-
 And the rest of the js2 config:
-
 #+begin_src emacs-lisp
       (use-package js2-mode
         :ensure js2-mode
@@ -474,6 +470,15 @@ And the rest of the js2 config:
           (bind-key "C-c w" 'sacha/copy-javascript-region-or-buffer js2-mode-map)
           (bind-key "C-c l" 'js-load-file-and-go js2-mode-map)))
 #+end_src
+**** React JS
+JSX Mode
+#+begin_src emacs-lisp
+(use-package jsx-mode 
+  :ensure t
+  :init 
+    (autoload 'jsx-mode "jsx-mode" "JSX mode" t))
+#+end_src
+
 
 *** TODO Magit - nice git interface
 #+begin_src emacs-lisp
@@ -758,7 +763,8 @@ with HTTPS sites.
 ;;(use-package color-theme-sanityinc-tomorrow :ensure t)
 
 ;(use-package color-theme :ensure t)
-(use-package monokai-theme :ensure t)
+(use-package molokai-theme :ensure t)
+;;(use-package monokai-theme :ensure t)
 ;(color-theme-solarized-dark)
 
 #+end_src
