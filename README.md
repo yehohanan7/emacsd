@@ -9,4 +9,4 @@ clone this repo as ~/.emacs.d and then start up your emacs and enjoy!
 * Javascript & react
 * Common Lisp
 
-## Along with that, you get tons of useful shortcuts and tweaks which is easily described in an Org file
+Along with that, you get tons of useful shortcuts and tweaks which is easily described in an [Org](https://github.com/yehohanan7/emacsd/blob/master/john.org) file
