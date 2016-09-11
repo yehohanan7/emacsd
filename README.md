@@ -1,7 +1,7 @@
 # My emacs setup
 clone this repo as ~/.emacs.d and then start up your emacs and enjoy!
 
-## You will the below extensions configured and ready to use
+## You will get the below extensions configured and ready to use
 
 * Go
 * Clojure
