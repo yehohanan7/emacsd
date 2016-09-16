@@ -378,43 +378,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
     (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
     (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 #+end_src
-**** Refactoring  :drill:
-     SCHEDULED: <2013-03-03 Sun>
-     :PROPERTIES:
-     :ID:       99ac7ddb-08ef-46c4-8fa8-8a45164f9ef4
-     :DRILL_LAST_INTERVAL: 3.86
-     :DRILL_REPEATS_SINCE_FAIL: 2
-     :DRILL_TOTAL_REPEATS: 2
-     :DRILL_FAILURE_COUNT: 1
-     :DRILL_AVERAGE_QUALITY: 2.5
-     :DRILL_EASE: 2.36
-     :DRILL_LAST_QUALITY: 3
-     :DRILL_LAST_REVIEWED: [2013-02-27 Wed 21:18]
-     :END:
-
-More things that I need to get used to...
-
-#+begin_src emacs-lisp
-;; C-c C-v l : elint current buffer in clean environment.
-;; C-c C-v L : elint current buffer by multiple emacs binaries.
-;;             See `erefactor-lint-emacsen'
-;; C-c C-v r : Rename symbol in current buffer.
-;;             Resolve `let' binding as long as i can.
-;; C-c C-v R : Rename symbol in requiring modules and current buffer.
-;; C-c C-v h : Highlight current symbol in this buffer
-;;             and suppress `erefacthr-highlight-mode'.
-;; C-c C-v d : Dehighlight all by above command.
-;; C-c C-v c : Switch prefix bunch of symbols.
-;;             ex: '(hoge-var hoge-func) -> '(foo-var foo-func)
-;; C-c C-v ? : Display flymake elint warnings/errors
-
-  (use-package erefactor
-    :ensure erefactor
-    :config
-    (define-key emacs-lisp-mode-map "\C-c\C-v" erefactor-map))
-#+end_src
 **** Jumping to code
-
 #+begin_src emacs-lisp
 (define-key emacs-lisp-mode-map (kbd "C-c .") 'find-function-at-point)
 (bind-key "C-c f" 'find-function)
@@ -428,58 +392,6 @@ More things that I need to get used to...
 #+begin_src emacs-lisp
     (setq vc-diff-switches '("-b" "-B" "-u"))
 #+end_src
-*** Javascript
-This makes script blocks easier to copy:
-#+begin_src emacs-lisp
-(defvar sacha/javascript-test-regexp (concat (regexp-quote "/** Testing **/") "\\(.*\n\\)*")
-	"Regular expression matching testing-related code to remove.
-See `sacha/copy-javascript-region-or-buffer'.")
-
-(defun sacha/copy-javascript-region-or-buffer (beg end)
-	"Copy the active region or the buffer, wrapping it in script tags.
-Add a comment with the current filename and skip test-related
-code. See `sacha/javascript-test-regexp' to change the way
-test-related code is detected."
-	(interactive "r")
-	(unless (region-active-p)
-		(setq beg (point-min) end (point-max)))
-	(kill-new
-	 (concat
-		"<script type=\"text/javascript\">\n"
-		(if (buffer-file-name) (concat "// " (file-name-nondirectory (buffer-file-name)) "\n") "")
-		(replace-regexp-in-string
-		 sacha/javascript-test-regexp
-		 ""
-		 (buffer-substring (point-min) (point-max))
-		 nil)
-		"\n</script>")))
-#+end_src
-And the rest of the js2 config:
-#+begin_src emacs-lisp
-      (use-package js2-mode
-        :ensure js2-mode
-        :commands js2-mode
-        :init
-          (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-        :config
-        (progn 
-          (bind-key "C-x C-e" 'js-send-last-sexp js2-mode-map)
-          (bind-key "C-M-x" 'js-send-last-sexp-and-go js2-mode-map)
-          (bind-key "C-c b" 'js-send-buffer js2-mode-map)
-          (bind-key "C-c C-b" 'js-send-buffer-and-go js2-mode-map)
-          (bind-key "C-c w" 'sacha/copy-javascript-region-or-buffer js2-mode-map)
-          (bind-key "C-c l" 'js-load-file-and-go js2-mode-map)))
-#+end_src
-**** React JS
-JSX Mode
-#+begin_src emacs-lisp
-(use-package jsx-mode 
-  :ensure t
-  :init 
-    (autoload 'jsx-mode "jsx-mode" "JSX mode" t))
-#+end_src
-
-
 *** TODO Magit - nice git interface
 #+begin_src emacs-lisp
 (use-package magit
@@ -539,19 +451,6 @@ options to add at the end of the command, but that can wait for another time (or
 
 #+begin_src emacs-lisp
 
-#+end_src
-
-*** Skewer
-
-This lets you send HTML, CSS, and Javascript fragments to Google
-Chrome. You may need to start Chrome with =chrome
---allow-running-insecure-content=, if you're using the user script
-with HTTPS sites.
-
-#+begin_src emacs-lisp
-(use-package skewer-mode
-  :ensure skewer-mode
-  :config (skewer-setup))
 #+end_src
 
 *** Autocomplete & snippets
@@ -705,8 +604,25 @@ with HTTPS sites.
 
 *** ReactJs
 #+begin_src emacs-lisp
+(use-package flycheck 
+  :ensure t)
+
 (use-package web-mode
   :ensure web-mode)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+
+
+(defun my-web-mode-hook ()
+  (if (equal web-mode-content-type "javascript")
+    (web-mode-set-content-type "jsx")
+    (message "now set to: %s" web-mode-content-type))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
 #+end_src
 
 #+RESULTS:
@@ -877,6 +793,12 @@ Copy entire buffer
     (kill-ring-save (point-min) (point-max))
     (message "buffer copied")))
 
+#+end_src
+
+Smoother scrolling
+#+begin_src emacs-lisp
+(use-package smooth-scrolling :ensure t)
+(smooth-scrolling-mode 1)
 #+end_src
 
 Move faster between lines
