@@ -633,6 +633,37 @@ options to add at the end of the command, but that can wait for another time (or
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
 #+end_src
 
+Replace selected text
+#+begin_src emacs-lisp
+(delete-selection-mode 1)
+#+end_src
+
+copy word/line at point
+#+begin_src emacs-lisp
+(defun copy-word (&optional arg)
+ "Copy words at point into kill-ring"
+ (interactive "P")
+ (save-excursion 
+   (forward-word)
+   (backward-word)
+   (let ((start (point)))
+     (forward-word)
+     (copy-region-as-kill start (point)))))
+
+(defun copy-line (&optional arg)
+ "Copy line at point into kill-ring"
+ (interactive "P")
+ (save-excursion 
+   (move-beginning-of-line 1)
+   (let ((start (point)))
+     (move-end-of-line 1)
+     (copy-region-as-kill start (point)))))
+
+(global-set-key (kbd "C-c w")  (quote copy-word))
+(global-set-key (kbd "C-c l")  (quote copy-line))
+
+#+end_src
+
 *** Org mode
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
