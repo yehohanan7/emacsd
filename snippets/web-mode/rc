@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+#name : rc
+# --
+import React from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
+import * as kuralActions from '../../actions/kuralActions';
+
+
+class $1 extends React.Component {
+  constructor(props, context){
+    super(props, context);
+  }
+
+
+  render() {
+    return (
+      $0
+    );
+  }
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+
+  };
+}
+
+function actionsToProps(dispatch) {
+  return {
+    actions: bindActionCreators(kuralActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, actionsToProps)($1);
