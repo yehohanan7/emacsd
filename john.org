@@ -627,14 +627,9 @@ options to add at the end of the command, but that can wait for another time (or
 
 #+RESULTS:
 
-
 ** Writing
 #+begin_src emacs-lisp
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
-#+end_src
-
-#+begin_src emacs-lisp
-(global-unset-key (kbd "C-z"))
 #+end_src
 
 Replace selected text
@@ -663,8 +658,12 @@ copy word/line at point
      (move-end-of-line 1)
      (copy-region-as-kill start (point)))))
 
-(global-set-key (kbd "C-z w")  (quote copy-word))
-(global-set-key (kbd "C-z l")  (quote copy-line))
+(global-set-key (kbd "C-c w")  'copy-word)
+(global-set-key (kbd "C-c l")  'copy-line)
+(global-set-key (kbd "C-c g")  'goto-line)
+(global-set-key (kbd "C-c d")  'kill-word-under-cursor)
+
+
 #+end_src
 
 *** Org mode
