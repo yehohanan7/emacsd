@@ -661,8 +661,6 @@ copy word/line at point
 (global-set-key (kbd "C-c w")  'copy-word)
 (global-set-key (kbd "C-c l")  'copy-line)
 (global-set-key (kbd "C-c g")  'goto-line)
-(global-set-key (kbd "C-c d")  'kill-word-under-cursor)
-
 
 #+end_src
 
@@ -877,10 +875,10 @@ Name spaces
 
 ** Presentation
 #+begin_src emacs-lisp
-(use-package org-present
+'(use-package org-present
   :ensure org-present)
 
-(use-package org-presie
+'(use-package org-presie
   :ensure org-presie)
 #+end_src
 
