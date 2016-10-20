@@ -587,77 +587,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 #+end_src
 
 #+RESULTS:
-
-** Writing
-#+begin_src emacs-lisp
-(setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
-#+end_src
-
-Replace selected text
-#+begin_src emacs-lisp
-(delete-selection-mode 1)
-#+end_src
-
-copy word/line at point
-#+begin_src emacs-lisp
-(defun copy-word (&optional arg)
- "Copy words at point into kill-ring"
- (interactive "P")
- (save-excursion 
-   (forward-word)
-   (backward-word)
-   (let ((start (point)))
-     (forward-word)
-     (copy-region-as-kill start (point)))))
-
-(defun copy-line (&optional arg)
- "Copy line at point into kill-ring"
- (interactive "P")
- (save-excursion 
-   (move-beginning-of-line 1)
-   (let ((start (point)))
-     (move-end-of-line 1)
-     (copy-region-as-kill start (point)))))
-
-(global-set-key (kbd "C-c w")  'copy-word)
-(global-set-key (kbd "C-c l")  'copy-line)
-(global-set-key (kbd "C-c g")  'goto-line)
-#+end_src
-
-*** Org mode
-#+begin_src emacs-lisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sh . t)))
-#+end_src
-
-*** Multiple Editing
-#+begin_src emacs-lisp
-(use-package multiple-cursors
-  :ensure multiple-cursors
-  :bind 
-   (("C-c m a" . mc/mark-all-like-this)
-    ("C-c m m" . mc/mark-all-like-this-dwim)
-    ("C-c m l" . mc/edit-lines)
-    ("C-c m n" . mc/mark-next-like-this)
-    ("C-c m p" . mc/mark-previous-like-this)
-    ("C-c m s" . mc/mark-sgml-tag-pair)
-    ("C-c m d" . mc/mark-all-like-this-in-defun)))
-
-(use-package phi-search
-  :ensure phi-search)
-(use-package phi-search-mc
-  :ensure phi-search-mc
-  :config
-  (phi-search-mc/setup-keys))
-(use-package mc-extras
-  :ensure mc-extras
-  :config
-    (define-key mc/keymap (kbd "C-. =") 'mc/compare-chars))
-
-
-#+end_src
-
 ** Themes
 #+begin_src emacs-lisp
 
@@ -676,7 +605,6 @@ copy word/line at point
 
 #+end_src
 
-** Productivity
 ** Http
 *** Rest client
 #+begin_src emacs-lisp
@@ -684,7 +612,6 @@ copy word/line at point
   :ensure restclient
   :init (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode)))
 #+end_src
-
 ** Terminal
 *** Multi term
 #+begin_src emacs-lisp
@@ -744,7 +671,6 @@ copy word/line at point
 #+begin_src emacs-lisp
 (server-start)
 #+end_src
-
 ** Social
 *** Internet Relay Chat
    #+begin_src emacs-lisp
@@ -764,16 +690,112 @@ copy word/line at point
 (use-package hackernews
   :ensure hackernews)
 #+end_src
-
 ** Machine Learning
-
 *** Ipython Notebook
 #+begin_src emacs-lisp
 (use-package ein
   :ensure ein)
 #+end_src
-
 ** Custom
+** Utilities
+*** External utilities
+String Utility
+#+begin_src emacs-lisp
+(use-package s
+  :ensure s)
+#+end_src
+
+Name spaces
+#+begin_src emacs-lisp
+(use-package names
+  :ensure names)
+#+end_src
+
+*** Custom utilities
+#+begin_src emacs-lisp
+'(load-file "~/.emacs.d/custom/aws/aws.el")
+#+end_src
+** Presentation
+#+begin_src emacs-lisp
+'(use-package org-present
+  :ensure org-present)
+
+'(use-package org-presie
+  :ensure org-presie)
+#+end_src
+
+** Ergonomic
+#+begin_src emacs-lisp
+(setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
+#+end_src
+
+*** Basics
+Replace selected text
+#+begin_src emacs-lisp
+(delete-selection-mode 1)
+#+end_src
+
+copy word/line at point
+#+begin_src emacs-lisp
+(defun copy-word (&optional arg)
+ "Copy words at point into kill-ring"
+ (interactive "P")
+ (save-excursion 
+   (forward-word)
+   (backward-word)
+   (let ((start (point)))
+     (forward-word)
+     (copy-region-as-kill start (point)))))
+
+(defun copy-line (&optional arg)
+ "Copy line at point into kill-ring"
+ (interactive "P")
+ (save-excursion 
+   (move-beginning-of-line 1)
+   (let ((start (point)))
+     (move-end-of-line 1)
+     (copy-region-as-kill start (point)))))
+
+(global-set-key (kbd "C-c w")  'copy-word)
+(global-set-key (kbd "C-c l")  'copy-line)
+(global-set-key (kbd "C-c g")  'goto-line)
+#+end_src
+
+
+Org mode
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)))
+#+end_src
+
+*** Multiple Editing
+#+begin_src emacs-lisp
+(use-package multiple-cursors
+  :ensure multiple-cursors
+  :bind 
+   (("C-c m a" . mc/mark-all-like-this)
+    ("C-c m m" . mc/mark-all-like-this-dwim)
+    ("C-c m l" . mc/edit-lines)
+    ("C-c m n" . mc/mark-next-like-this)
+    ("C-c m p" . mc/mark-previous-like-this)
+    ("C-c m s" . mc/mark-sgml-tag-pair)
+    ("C-c m d" . mc/mark-all-like-this-in-defun)))
+
+(use-package phi-search
+  :ensure phi-search)
+(use-package phi-search-mc
+  :ensure phi-search-mc
+  :config
+  (phi-search-mc/setup-keys))
+(use-package mc-extras
+  :ensure mc-extras
+  :config
+    (define-key mc/keymap (kbd "C-. =") 'mc/compare-chars))
+
+
+#+end_src
+
 *** Buffer navigation
 Copy entire buffer
 #+begin_src emacs-lisp
@@ -813,33 +835,6 @@ Move faster between words
 (defun kill-other-buffers ()
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-#+end_src
-** Utilities
-*** External utilities
-String Utility
-#+begin_src emacs-lisp
-(use-package s
-  :ensure s)
-#+end_src
-
-Name spaces
-#+begin_src emacs-lisp
-(use-package names
-  :ensure names)
-#+end_src
-
-*** Custom utilities
-#+begin_src emacs-lisp
-'(load-file "~/.emacs.d/custom/aws/aws.el")
-#+end_src
-
-** Presentation
-#+begin_src emacs-lisp
-'(use-package org-present
-  :ensure org-present)
-
-'(use-package org-presie
-  :ensure org-presie)
 #+end_src
 
 ** DevOps
