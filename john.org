@@ -253,9 +253,8 @@ Handy way of getting back to previous places.
 
 *** Make window splitting more useful
 
-Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury
 #+begin_src emacs-lisp
-(defun sacha/vsplit-last-buffer (prefix)
+(defun vsplit-last-buffer (prefix)
   "Split the window vertically and display the previous buffer."
   (interactive "p")
   (split-window-vertically)
@@ -263,15 +262,15 @@ Copied from http://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tri
   (unless prefix
     (switch-to-next-buffer)))
 
-(defun sacha/hsplit-last-buffer (prefix)
+(defun hsplit-last-buffer (prefix)
   "Split the window horizontally and display the previous buffer."
   (interactive "p")
   (split-window-horizontally)
   (other-window 1 nil)
   (unless prefix (switch-to-next-buffer)))
 
-(bind-key "C-x 2" 'sacha/vsplit-last-buffer)
-(bind-key "C-x 3" 'sacha/hsplit-last-buffer)
+(bind-key "C-x 2" 'vsplit-last-buffer)
+(bind-key "C-x 3" 'hsplit-last-buffer)
 
 #+end_src
 *** Directory tree
@@ -392,7 +391,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 #+begin_src emacs-lisp
     (setq vc-diff-switches '("-b" "-B" "-u"))
 #+end_src
-*** TODO Magit - nice git interface
+*** Magit - nice git interface
 #+begin_src emacs-lisp
 (use-package magit
   :ensure magit
@@ -402,39 +401,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 
 (global-set-key (kbd "C-S-g") #'magit-status)
 #+end_src
-
-The proper way to implement this is probably to patch or override the
-definition of magit-git-insert-section so that it takes a list of
-options to add at the end of the command, but that can wait for another time (or braver souls). 
-
-**** TODO Make this better by adding a post command options variable
-*** Tag files
-
-    I don't often use a TAGS file, but when I do, I don't want to have
-    to set my tags file per project. I search for it in the directory
-    tree instead.
-    
-    #+begin_src emacs-lisp
-      (defun sacha/recursive-find-file (file &optional directory)
-        "Find the first FILE in DIRECTORY or its parents."
-        (setq directory (or directory (file-name-directory (buffer-file-name)) (pwd)))
-        (if (file-exists-p (expand-file-name file directory))
-            (expand-file-name file directory)
-          (unless (string= directory "/")
-            (sacha/recursive-find-file file (expand-file-name ".." directory)))))
-      
-      (defun sacha/find-tags ()
-        "Set the TAGS file."
-        (set (make-variable-buffer-local 'tags-table-list) nil)
-        (set (make-variable-buffer-local 'tags-file-name) 
-             (sacha/recursive-find-file "TAGS")))
-      
-      (eval-after-load 'drupal-mode
-        '(progn
-           (add-hook 'drupal-mode-hook 'sacha/find-tags)))
-      #+end_src
 *** Projects
-
 #+begin_src emacs-lisp
 (use-package projectile
   :ensure projectile
@@ -447,12 +414,6 @@ options to add at the end of the command, but that can wait for another time (or
 (use-package helm-projectile
    :ensure helm-projectile)
 #+end_src
-*** Exploring MELPA recipes
-
-#+begin_src emacs-lisp
-
-#+end_src
-
 *** Autocomplete & snippets
 #+begin_src emacs-lisp
 (use-package yasnippet
@@ -661,7 +622,6 @@ copy word/line at point
 (global-set-key (kbd "C-c w")  'copy-word)
 (global-set-key (kbd "C-c l")  'copy-line)
 (global-set-key (kbd "C-c g")  'goto-line)
-
 #+end_src
 
 *** Org mode
@@ -671,7 +631,7 @@ copy word/line at point
  '((sh . t)))
 #+end_src
 
-** Multiple Editing
+*** Multiple Editing
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :ensure multiple-cursors
