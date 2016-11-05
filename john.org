@@ -517,8 +517,8 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 
 *** Go
 #+begin_src emacs-lisp
-(setenv "GOROOT" "/usr/local/go")
-(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
+(setenv "GOROOT" "/usr/lib/go")
+(setenv "GOPATH" (concat (getenv "HOME") "/go"))
 
 (use-package go-mode
    :ensure go-mode
@@ -853,3 +853,5 @@ Move faster between words
   :ensure t
   :init (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 #+end_src
+** Email
+
