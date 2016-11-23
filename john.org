@@ -530,6 +530,9 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (use-package go-eldoc
    :ensure go-eldoc)
 
+(use-package go-guru
+   :ensure go-guru)
+
 (use-package go-autocomplete
    :ensure go-autocomplete
    :init
