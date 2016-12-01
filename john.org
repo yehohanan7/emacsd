@@ -7,6 +7,7 @@
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/elisp")
 (add-to-list 'load-path "~/elisp/artbollocks-mode")
+(add-to-list 'load-path "~/.emacs.d/custom/gog")
 (add-to-list 'load-path "~/.emacs.d/custom/emacs-elixir/")
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
@@ -30,6 +31,7 @@ after adding these for the first time.
 ** Load custom modules
 #+begin_src emacs-lisp
 (require 'fortune)
+(require 'gog-json)
 #+end_src
 
 ** Install use-package if not installed
