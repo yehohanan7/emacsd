@@ -582,18 +582,16 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 ** Themes
 #+begin_src emacs-lisp
 
-;;(use-package ample-zen-theme
-;;  :ensure ample-zen-theme)
-
-;;(use-package zenburn-theme
-;;    :ensure zenburn-theme)
-
-;;(use-package color-theme-sanityinc-tomorrow :ensure t)
-
+(use-package ample-zen-theme :ensure t)
+;(use-package zenburn-theme :ensure t)
+;(use-package yoshi-theme :ensure t)
 ;(use-package color-theme :ensure t)
-(use-package molokai-theme :ensure t)
-;;(use-package monokai-theme :ensure t)
-;(color-theme-solarized-dark)
+;(use-package molokai-theme :ensure t)
+;(use-package atom-one-dark-theme :ensure t)
+;(use-package github-theme :ensure t)
+;(use-package monokai-theme :ensure t)
+;(use-package color-theme-solarized-dark :ensure t)
+;(use-package pastels-on-dark-theme :ensure t)
 
 #+end_src
 
