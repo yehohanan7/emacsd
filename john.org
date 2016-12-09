@@ -832,12 +832,17 @@ move cursor to the beginning of line
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
 
+*** Run commands
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-!")  'shell-command)
+#+end_src
 *** Expand region
 #+begin_src emacs-lisp
 (use-package expand-region
   :ensure expand-region
   :bind ("C-c C-u" . er/expand-region))
 #+end_src
+
 
 ** DevOps
 *** shell
