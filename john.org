@@ -352,12 +352,6 @@ https://github.com/bbatsov/prelude
 (global-set-key (kbd "RET") 'newline-and-indent)
 #+end_src
 
-*** Expand region
-#+begin_src emacs-lisp
-  (use-package expand-region
-    :ensure expand-region
-    :bind ("C-=" . er/expand-region))
-#+end_src
 *** Emacs Lisp
 **** Edebug
 
@@ -822,11 +816,27 @@ Move faster between words
 (global-set-key (kbd "C-S-b") 'backward-word)
 #+end_src
 
+move cursor to the beginning of line
+#+begin_src emacs-lisp
+(defun back-to-indentation-or-beginning () (interactive)
+   (if (= (point) (progn (back-to-indentation) (point)))
+       (beginning-of-line)))
+
+(global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
+#+end_src
+
 *** Closing buffers
 #+begin_src emacs-lisp
 (defun kill-other-buffers ()
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
+
+*** Expand region
+#+begin_src emacs-lisp
+(use-package expand-region
+  :ensure expand-region
+  :bind ("C-c C-u" . er/expand-region))
 #+end_src
 
 ** DevOps
