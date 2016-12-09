@@ -811,14 +811,18 @@ Move faster between lines
 
 (global-set-key (kbd "C-S-p")
     (lambda () (interactive) (next-line -5)))
-
 #+end_src
 
 Move faster between words
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-S-f") 'forward-word)
+(defun beggining-of-next-word ()
+  (interactive)
+  (forward-word)
+  (forward-char))
+
+(global-set-key (kbd "C-S-f") 'beggining-of-next-word)
 (global-set-key (kbd "C-S-b") 'backward-word)
-  #+end_src
+#+end_src
 
 *** Closing buffers
 #+begin_src emacs-lisp
