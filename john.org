@@ -740,9 +740,9 @@ copy word/line at point
      (move-end-of-line 1)
      (copy-region-as-kill start (point)))))
 
-(global-set-key (kbd "C-c w")  'copy-word)
-(global-set-key (kbd "C-c l")  'copy-line)
-(global-set-key (kbd "C-c g")  'goto-line)
+(global-set-key (kbd "C-c C-w")  'copy-word)
+(global-set-key (kbd "C-c C-l")  'copy-line)
+(global-set-key (kbd "C-c C-g")  'goto-line)
 #+end_src
 
 
