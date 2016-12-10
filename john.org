@@ -90,72 +90,51 @@ Remove tooltip, toolbar etc
 
 *** Helm - interactive completion
 #+begin_src emacs-lisp
-    (use-package helm
-      :ensure helm
-      :init
-      (progn 
-        (require 'helm-config) 
-        (setq helm-candidate-number-limit 100)
-        ;; From https://gist.github.com/antifuchs/9238468
-        (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-              helm-input-idle-delay 0.01  ; this actually updates things
-                                            ; reeeelatively quickly.
-              helm-quick-update t
-              helm-M-x-requires-pattern nil
-              helm-ff-skip-boring-files t)
-        (helm-mode))
-      :config
-      (progn
-        ;; I don't like the way switch-to-buffer uses history, since
-        ;; that confuses me when it comes to buffers I've already
-        ;; killed. Let's use ido instead.
-        (add-to-list 'helm-completing-read-handlers-alist 
-                     '(switch-to-buffer . ido))
-        ;; Unicode
-        (add-to-list 'helm-completing-read-handlers-alist 
-                     '(insert-char . ido)))
-      :bind (("C-c h" . helm-mini) 
-             ("C-h a" . helm-apropos)
-             ("M-y" . helm-show-kill-ring)
-             ("M-x" . helm-M-x)
-             ("C-x c o" . helm-occur)
-             ("C-x c s" . helm-swoop)
-             ("C-x c SPC" . helm-all-mark-rings)))
-    (ido-mode -1) ;; Turn off ido mode in case I enabled it accidentally
+(use-package helm
+  :ensure helm
+  :init
+  (progn 
+    (require 'helm-config) 
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
+    (helm-mode))
+    :config
+    (progn
+      ;; I don't like the way switch-to-buffer uses history, since
+      ;; that confuses me when it comes to buffers I've already
+      ;; killed. Let's use ido instead.
+      (add-to-list 'helm-completing-read-handlers-alist '(switch-to-buffer . ido))
+      ;; Unicode
+      (add-to-list 'helm-completing-read-handlers-alist '(insert-char . ido)))
+    :bind (("C-c h" . helm-mini) 
+           ("C-h a" . helm-apropos)
+           ("M-y" . helm-show-kill-ring)
+           ("M-x" . helm-M-x)))
+
+(ido-mode -1)
 #+end_src
 
-*** Mode line format
+*** Mode line
 
-Display a more compact mode line
-
+Smart line mode
 #+begin_src emacs-lisp
+(use-package smart-mode-line-powerline-theme :ensure t)
 (use-package smart-mode-line
   :init
   (progn
-  (setq-default
-   mode-line-format 
-   '("%e"
-     mode-line-front-space
-     mode-line-mule-info
-     mode-line-client
-     mode-line-modified
-     mode-line-remote
-     mode-line-frame-identification
-     mode-line-buffer-identification
-     "   "
-     mode-line-position
-     (vc-mode vc-mode)
-     "  "
-     mode-line-modes
-     mode-line-misc-info
-     mode-line-end-spaces))))
+    (setq sml/no-confirm-load-theme t)
+    (setq sml/theme 'respectful)
+    (sml/setup)))
 #+end_src
 
 Hide minor modes I care less about:
-
 #+begin_src emacs-lisp
-(use-package diminish :ensure)
-(require 'diminish)
+(use-package diminish :ensure t)
 (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
 (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
 (eval-after-load "guide-key" '(diminish 'guide-key-mode))
@@ -166,21 +145,17 @@ Hide minor modes I care less about:
 #+end_src
 
 *** Change "yes or no" to "y or n"
-
-Lazy people like me never want to type "yes" when "y" will suffice.
-
 #+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)   
 #+end_src
 
 *** Minibuffer editing - more space!
 
-    Sometimes you want to be able to do fancy things with the text
-    that you're entering into the minibuffer. Sometimes you just want
-    to be able to read it, especially when it comes to lots of text.
-    This binds =C-M-e= in a minibuffer) so that you can edit the
-    contents of the minibuffer before submitting it.
-
+Sometimes you want to be able to do fancy things with the text
+that you're entering into the minibuffer. Sometimes you just want
+to be able to read it, especially when it comes to lots of text.
+This binds =C-M-e= in a minibuffer) so that you can edit the
+contents of the minibuffer before submitting it.
 #+begin_src emacs-lisp
   (use-package miniedit
     :ensure miniedit
@@ -189,24 +164,11 @@ Lazy people like me never want to type "yes" when "y" will suffice.
 #+end_src
 
 *** UTF-8
-
 From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.html
 #+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-#+end_src
-*** Killing text
-
-From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
-
-#+begin_src emacs-lisp
-  (defadvice kill-region (before slick-cut activate compile)
-    "When called interactively with no active region, kill a single line instead."
-    (interactive
-      (if mark-active (list (region-beginning) (region-end))
-        (list (line-beginning-position)
-          (line-beginning-position 2)))))
 #+end_src
 *** exec path
 #+begin_src emacs-lisp
@@ -225,32 +187,28 @@ From https://github.com/itsjeyd/emacs-config/blob/emacs24/init.el
     (drag-stuff-global-mode 1)
     (add-hook 'org-mode-hook (lambda() (drag-stuff-mode -1)))))
 
+#+end_src
 
+** Themes
+
+#+begin_src emacs-lisp
+(use-package ample-zen-theme :ensure t)
+;(use-package zenburn-theme :ensure t)
+;(use-package yoshi-theme :ensure t)
+;(use-package color-theme :ensure t)
+;(use-package molokai-theme :ensure t)
+;(use-package atom-one-dark-theme :ensure t)
+;(use-package github-theme :ensure t)
+;(use-package monokai-theme :ensure t)
+;(use-package color-theme-solarized-dark :ensure t)
+;(use-package pastels-on-dark-theme :ensure t)
 #+end_src
 
 ** Navigation
-*** Pop to mark
-
-Handy way of getting back to previous places.
-
-#+begin_src emacs-lisp
-(bind-key "C-x p" 'pop-to-mark-command)
-(setq set-mark-command-repeat-pop t)
-#+end_src
 *** Text size
 #+begin_src emacs-lisp
 (bind-key "C-+" 'text-scale-increase)
 (bind-key "C--" 'text-scale-decrease)
-#+end_src
-
-*** Helm-swoop - quickly finding lines
-#+begin_src emacs-lisp
-  (use-package helm-swoop
-   :ensure helm-swoop
-   :bind
-   (("C-S-s" . helm-swoop)
-    ("C-S-r" . helm-swoop-back-to-last-point)
-    ("C-x C-S-s" . helm-multi-swoop-all)))
 #+end_src
 
 *** Make window splitting more useful
@@ -276,7 +234,6 @@ Handy way of getting back to previous places.
 
 #+end_src
 *** Directory tree
-
 #+begin_src emacs-lisp
 (use-package dirtree
   :ensure dirtree)
@@ -288,7 +245,6 @@ Handy way of getting back to previous places.
 
 #+end_src
 *** Recent files
-
 #+begin_src emacs-lisp
 (require 'recentf)
 (setq recentf-max-saved-items 200
@@ -296,10 +252,6 @@ Handy way of getting back to previous places.
 (recentf-mode)
 #+end_src
 *** Copy filename to clipboard
-
-http://emacsredux.com/blog/2013/03/27/copy-filename-to-the-clipboard/
-https://github.com/bbatsov/prelude
-
 #+begin_src emacs-lisp
 (defun prelude-copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -324,7 +276,7 @@ https://github.com/bbatsov/prelude
 #+end_src
 *** Tab width of 2 is compact and readable
 #+begin_src emacs-lisp
-    (setq-default tab-width 2)
+(setq-default tab-width 2)
 #+end_src
 *** Add new line above/below current cursor
 #+begin_src emacs-lisp
@@ -385,7 +337,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 
 *** Don't show whitespace in diff, but show context
 #+begin_src emacs-lisp
-    (setq vc-diff-switches '("-b" "-B" "-u"))
+(setq vc-diff-switches '("-b" "-B" "-u"))
 #+end_src
 *** Magit - nice git interface
 #+begin_src emacs-lisp
@@ -448,12 +400,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
   :ensure better-defaults)
 #+end_src
 
-*** Erlang 
-#+begin_src emacs-lisp
-(use-package erlang
-  :ensure erlang)
-#+end_src
-
 *** Clojure
 **** org babel configuration
 
@@ -505,15 +451,9 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
             (setq jedi:complete-on-dot t)))
 #+end_src
     
-*** Haskell
-#+begin_src emacs-lisp
-(use-package haskell-mode
-   :ensure haskell-mode)
-#+end_src
-
 *** Go
 #+begin_src emacs-lisp
-(setenv "GOROOT" "/usr/lib/go")
+(setenv "GOROOT" "/usr/local/go")
 (setenv "GOPATH" (concat (getenv "HOME") "/go"))
 
 (use-package go-mode
@@ -573,22 +513,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 #+end_src
 
 #+RESULTS:
-** Themes
-#+begin_src emacs-lisp
-
-(use-package ample-zen-theme :ensure t)
-;(use-package zenburn-theme :ensure t)
-;(use-package yoshi-theme :ensure t)
-;(use-package color-theme :ensure t)
-;(use-package molokai-theme :ensure t)
-;(use-package atom-one-dark-theme :ensure t)
-;(use-package github-theme :ensure t)
-;(use-package monokai-theme :ensure t)
-;(use-package color-theme-solarized-dark :ensure t)
-;(use-package pastels-on-dark-theme :ensure t)
-
-#+end_src
-
 ** Http
 *** Rest client
 #+begin_src emacs-lisp
@@ -674,13 +598,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (use-package hackernews
   :ensure hackernews)
 #+end_src
-** Machine Learning
-*** Ipython Notebook
-#+begin_src emacs-lisp
-(use-package ein
-  :ensure ein)
-#+end_src
-** Custom
 ** Utilities
 *** External utilities
 String Utility
@@ -839,7 +756,6 @@ move cursor to the beginning of line
   :bind ("C-c C-u" . er/expand-region))
 #+end_src
 
-
 ** DevOps
 *** shell
 #+begin_src emacs-lisp
@@ -856,5 +772,13 @@ move cursor to the beginning of line
   :ensure t
   :init (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 #+end_src
-** Email
+*** Finding things
+#+begin_src emacs-lisp
+(use-package swiper-helm
+  :ensure t
+  :bind
+  (("C-s" . swiper)))
+#+end_src
+
+#+end_src
 
