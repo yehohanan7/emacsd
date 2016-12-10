@@ -88,6 +88,20 @@ Remove tooltip, toolbar etc
   (setq sentence-end-double-space nil)
 #+end_src
 
+*** Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :ensure t
+  :init 
+  (progn
+    (setq projectile-keymap-prefix (kbd "C-c p")) 
+    (setq projectile-completion-system 'default)
+    (setq projectile-enable-caching t)
+    (projectile-global-mode)))
+(use-package helm-projectile :ensure t)
+
+#+end_src
+
 *** Helm - interactive completion
 #+begin_src emacs-lisp
 (use-package helm
@@ -112,6 +126,7 @@ Remove tooltip, toolbar etc
       ;; Unicode
       (add-to-list 'helm-completing-read-handlers-alist '(insert-char . ido)))
     :bind (("C-c h" . helm-mini) 
+           ("C-x C-f" . helm-projectile-find-file)
            ("C-h a" . helm-apropos)
            ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)))
@@ -192,9 +207,9 @@ From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.htm
 ** Themes
 
 #+begin_src emacs-lisp
-(use-package ample-zen-theme :ensure t)
+;(use-package ample-zen-theme :ensure t)
 ;(use-package zenburn-theme :ensure t)
-;(use-package yoshi-theme :ensure t)
+(use-package yoshi-theme :ensure t)
 ;(use-package color-theme :ensure t)
 ;(use-package molokai-theme :ensure t)
 ;(use-package atom-one-dark-theme :ensure t)
@@ -349,19 +364,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 
 (global-set-key (kbd "C-S-g") #'magit-status)
 #+end_src
-*** Projects
-#+begin_src emacs-lisp
-(use-package projectile
-  :ensure projectile
-  :init 
-  (progn
-    (setq projectile-keymap-prefix (kbd "C-c p")) 
-    (setq projectile-completion-system 'default)
-    (setq projectile-enable-caching t)
-    (projectile-global-mode)))
-(use-package helm-projectile
-   :ensure helm-projectile)
-#+end_src
+
 *** Autocomplete & snippets
 #+begin_src emacs-lisp
 (use-package yasnippet
