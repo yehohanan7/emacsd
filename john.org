@@ -756,6 +756,16 @@ move cursor to the beginning of line
   :bind ("C-c C-u" . er/expand-region))
 #+end_src
 
+*** Finding things
+#+begin_src emacs-lisp
+(use-package swiper-helm
+  :ensure t
+  :bind
+  (("C-s" . swiper)))
+#+end_src
+
+#+end_src
+
 ** DevOps
 *** shell
 #+begin_src emacs-lisp
@@ -771,14 +781,5 @@ move cursor to the beginning of line
 (use-package dockerfile-mode
   :ensure t
   :init (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-#+end_src
-*** Finding things
-#+begin_src emacs-lisp
-(use-package swiper-helm
-  :ensure t
-  :bind
-  (("C-s" . swiper)))
-#+end_src
-
 #+end_src
 
