@@ -2,6 +2,8 @@
 # name: func main()
 # key: mn
 # --
+package main
+
 func main() {
   $0
 }
