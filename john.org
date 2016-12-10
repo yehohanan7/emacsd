@@ -369,23 +369,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (yas-global-mode 1)
 (setq yas-snippet-dirs (append yas-snippet-dirs '("~/.emacs.d/snippets")))
 
-(use-package company
-  :ensure company
-  :config
-  (add-hook 'prog-mode-hook 'company-mode)
-  :init
-  (progn
-    (add-hook 'after-init-hook 'global-company-mode)
-    (global-company-mode)))
-
-(defvar company-mode/enable-yas t "Enable yasnippet for all backends.")
-
-(defun company-mode/backend-with-yas (backend)
-  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-  backend
-  (append (if (consp backend) backend (list backend)) '(:with company-yasnippet))))
-
-(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 #+end_src
 
 *** Yaml mode
@@ -469,23 +452,22 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (use-package go-guru
    :ensure go-guru)
 
-(use-package go-autocomplete
-   :ensure go-autocomplete
-   :init
-    (progn 
-      (define-key ac-complete-mode-map "\C-n" 'ac-next)
-      (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
+(use-package company :ensure t)
 
-(defun auto-complete-for-go ()
-  (auto-complete-mode 1))
+(use-package company-go :ensure t)
 
-(with-eval-after-load 'go-mode
-   (require 'go-autocomplete))
+(define-key company-active-map (kbd "\C-n") 'company-select-next)
+(define-key company-active-map (kbd "\C-p") 'company-select-previous)
+(define-key company-active-map (kbd "C-.") 'company-show-location)
 
-(add-hook 'go-mode-hook 'auto-complete-for-go)
+(add-hook 'go-mode-hook 
+   (lambda () 
+     (set (make-local-variable 'company-backends) '(company-go))
+     (company-mode)))
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
+
 
 #+end_src
 
