@@ -720,11 +720,19 @@ move cursor to the beginning of line
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 #+end_src
 
-move to anywhere in the buffer
+
+Goto locations
 #+begin_src emacs-lisp
-(use-package avy 
-  :ensure t
-  :bind (("C-:" . avy-goto-char)))
+(use-package avy :ensure t)
+
+(defhydra hydra-avy-goto ()
+  "goto"
+  ("c" avy-goto-char "goto char")
+  ("g" goto-line "goto line number")
+  ("w" avy-goto-word-0 "goto word")
+  ("l" avy-goto-line "goto line"))
+
+(key-chord-define-global "GG" 'hydra-avy-goto/body)
 
 #+end_src
 
