@@ -676,7 +676,7 @@ enable keychord
 #+end_src
 
 *** Buffer navigation
-Copy entire buffer
+**** Copy entire buffer
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-S-h") 
   (lambda ()
@@ -687,20 +687,20 @@ Copy entire buffer
 
 #+end_src
 
-Smoother scrolling
+**** Smoother scrolling
 #+begin_src emacs-lisp
 (use-package smooth-scrolling :ensure t)
 (smooth-scrolling-mode 1)
 #+end_src
 
-Move faster between lines
+**** Move faster between lines
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-S-n") 'forward-paragraph)
 (global-set-key (kbd "C-S-p") 'backward-paragraph)
 
 #+end_src
 
-Move faster between words
+**** Move faster between words
 #+begin_src emacs-lisp
 (defun beggining-of-next-word ()
   (interactive)
@@ -711,7 +711,7 @@ Move faster between words
 (global-set-key (kbd "C-S-b") 'backward-word)
 #+end_src
 
-move cursor to the beginning of line
+**** move cursor to the beginning of line
 #+begin_src emacs-lisp
 (defun back-to-indentation-or-beginning () (interactive)
    (if (= (point) (progn (back-to-indentation) (point)))
@@ -721,7 +721,7 @@ move cursor to the beginning of line
 #+end_src
 
 
-Goto locations
+**** Goto locations
 #+begin_src emacs-lisp
 (use-package avy :ensure t)
 
