@@ -125,7 +125,8 @@ Remove tooltip, toolbar etc
       (add-to-list 'helm-completing-read-handlers-alist '(switch-to-buffer . ido))
       ;; Unicode
       (add-to-list 'helm-completing-read-handlers-alist '(insert-char . ido)))
-    :bind (("C-c h" . helm-mini) 
+    :bind (("C-c h" . helm-mini)
+           ("C-x C-f" . projectile-find-file)
            ("C-h a" . helm-apropos)
            ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)))
@@ -724,6 +725,14 @@ move cursor to the beginning of line
        (beginning-of-line)))
 
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
+#+end_src
+
+move to anywhere in the buffer
+#+begin_src emacs-lisp
+(use-package avy 
+  :ensure t
+  :bind (("C-:" . avy-goto-char)))
+
 #+end_src
 
 *** Closing buffers
