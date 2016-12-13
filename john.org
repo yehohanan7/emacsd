@@ -107,6 +107,7 @@ Remove tooltip, toolbar etc
   ("T" projectile-toggle-between-implementation-and-test "toggle test")
   ("tt" projectile-test-project "run test")
   ("f" helm-projectile-find-file "find file")
+  ("b" helm-projectile-switch-to-buffer "switch buffer")
   ("d" helm-projectile-find-dir "find dir")
   ("g" helm-projectile-grep "grep")
   ("!" projectile-run-shell-command-in-root "run command")
@@ -672,12 +673,6 @@ enable keychord
 
 (key-chord-define-global "MM" 'hydra-multi-cursor/body)
 
-#+end_src
-
-*** Between buffer navigation
-Switch to buffer
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-x b") 'helm-projectile-switch-to-buffer)
 #+end_src
 
 *** Buffer navigation
