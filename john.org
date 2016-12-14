@@ -556,6 +556,24 @@ Name spaces
 #+end_src
 
 ** Ergonomic
+*** Basics
+Replace selected text
+#+begin_src emacs-lisp
+(delete-selection-mode 1)
+#+end_src
+
+copy word/line at point
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c C-g")  'goto-line)
+#+end_src
+
+Org mode
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)))
+#+end_src
+
 *** New lines are always indented
 #+begin_src emacs-lisp
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -599,29 +617,6 @@ Name spaces
   (progn 
     (drag-stuff-global-mode 1)
     (add-hook 'org-mode-hook (lambda() (drag-stuff-mode -1)))))
-#+end_src
-
-*** ispell
-#+begin_src emacs-lisp
-(setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
-#+end_src
-
-*** Basics
-Replace selected text
-#+begin_src emacs-lisp
-(delete-selection-mode 1)
-#+end_src
-
-copy word/line at point
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-c C-g")  'goto-line)
-#+end_src
-
-Org mode
-#+begin_src emacs-lisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sh . t)))
 #+end_src
 
 *** Keychord
@@ -695,7 +690,6 @@ enable keychord
 
 (global-set-key (kbd "C-a") 'back-to-indentation-or-beginning)
 #+end_src
-
 
 **** Goto locations
 #+begin_src emacs-lisp
