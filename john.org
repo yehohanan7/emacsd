@@ -8,12 +8,9 @@
 (add-to-list 'load-path "~/elisp")
 (add-to-list 'load-path "~/elisp/artbollocks-mode")
 (add-to-list 'load-path "~/.emacs.d/custom/gog")
-(add-to-list 'load-path "~/.emacs.d/custom/emacs-elixir/")
 (add-to-list 'load-path "~/.emacs.d/custom/fortunes/")
 (add-to-list 'load-path "~/.emacs.d/custom/john/")
 (add-to-list 'load-path "~/.emacs.d/slime/")
-(add-to-list 'load-path "~/.emacs.d/mu/mu")
-(add-to-list 'load-path "~/.emacs.d/mu/mu4e")
 (setq org-agenda-files '("~/hyperspace/"))
 #+end_src
 
@@ -28,7 +25,7 @@
 Use =M-x package-refresh-contents= to reload the list of packages
 after adding these for the first time.
 
-** Load custom modules
+*** Load custom modules
 #+begin_src emacs-lisp
 (require 'fortune)
 (require 'gog-json)
@@ -88,35 +85,6 @@ Remove tooltip, toolbar etc
   (setq sentence-end-double-space nil)
 #+end_src
 
-*** Projectile
-#+begin_src emacs-lisp
-(use-package projectile
-  :ensure t
-  :init 
-  (progn
-    (setq projectile-keymap-prefix (kbd "C-c p"))
-    (setq projectile-completion-system 'default)
-    (setq projectile-enable-caching t)
-    (projectile-global-mode)))
-
-(use-package helm-projectile :ensure t)
-
-(defhydra hydra-projectile ()
-  "projectile"
-  ("p" helm-projectile-switch-project "switch project")
-  ("T" projectile-toggle-between-implementation-and-test "toggle test")
-  ("tt" projectile-test-project "run test")
-  ("f" helm-projectile-find-file "find file")
-  ("b" helm-projectile-switch-to-buffer "switch buffer")
-  ("d" helm-projectile-find-dir "find dir")
-  ("g" helm-projectile-grep "grep")
-  ("!" projectile-run-shell-command-in-root "run command")
-  ("h" helm-projectile "helm"))
-
-(key-chord-define-global "PP" 'hydra-projectile/body)
-
-#+end_src
-
 *** Helm - interactive completion
 #+begin_src emacs-lisp
 (use-package helm
@@ -141,7 +109,7 @@ Remove tooltip, toolbar etc
       ;; Unicode
       (add-to-list 'helm-completing-read-handlers-alist '(insert-char . ido)))
     :bind (("C-c h" . helm-mini)
-           ("C-x C-f" . projectile-find-file)
+           ("C-x C-f" . helm-find-files)
            ("C-h a" . helm-apropos)
            ("M-y" . helm-show-kill-ring)
            ("M-x" . helm-M-x)))
@@ -149,8 +117,25 @@ Remove tooltip, toolbar etc
 (ido-mode -1)
 #+end_src
 
-*** Mode line
+*** Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :ensure t
+  :init 
+  (progn
+    (setq projectile-keymap-prefix (kbd "C-c p"))
+    (setq projectile-completion-system 'default)
+    (setq projectile-enable-caching t)
+    (projectile-global-mode)))
 
+(use-package helm-projectile 
+  :ensure t
+  :init
+  (helm-projectile-on))
+
+#+end_src
+
+*** Mode line
 Smart line mode
 #+begin_src emacs-lisp
 (use-package smart-mode-line-powerline-theme :ensure t)
@@ -207,38 +192,30 @@ From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.htm
   :init (exec-path-from-shell-initialize))
 #+end_src
 
-*** Drag stuff
-
-#+begin_src emacs-lisp
-(use-package drag-stuff
-  :ensure drag-stuff
-  :init 
-  (progn 
-    (drag-stuff-global-mode 1)
-    (add-hook 'org-mode-hook (lambda() (drag-stuff-mode -1)))))
-
-#+end_src
-
-** Themes
-
-#+begin_src emacs-lisp
-;(use-package ample-zen-theme :ensure t)
-;(use-package zenburn-theme :ensure t)
-(use-package yoshi-theme :ensure t)
-;(use-package color-theme :ensure t)
-;(use-package molokai-theme :ensure t)
-;(use-package atom-one-dark-theme :ensure t)
-;(use-package github-theme :ensure t)
-;(use-package monokai-theme :ensure t)
-;(use-package color-theme-solarized-dark :ensure t)
-;(use-package pastels-on-dark-theme :ensure t)
-#+end_src
-
-** Navigation
 *** Text size
 #+begin_src emacs-lisp
 (bind-key "C-+" 'text-scale-increase)
 (bind-key "C--" 'text-scale-decrease)
+#+end_src
+
+*** Recent files
+#+begin_src emacs-lisp
+(require 'recentf)
+(setq recentf-max-saved-items 200
+      recentf-max-menu-items 15)
+(recentf-mode)
+#+end_src
+*** Copy filename to clipboard
+#+begin_src emacs-lisp
+(defun prelude-copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
 #+end_src
 
 *** Make window splitting more useful
@@ -274,66 +251,33 @@ From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.htm
    (global-set-key [f8] 'neotree-toggle))
 
 #+end_src
-*** Recent files
+
+*** Themes
+
 #+begin_src emacs-lisp
-(require 'recentf)
-(setq recentf-max-saved-items 200
-      recentf-max-menu-items 15)
-(recentf-mode)
-#+end_src
-*** Copy filename to clipboard
-#+begin_src emacs-lisp
-(defun prelude-copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
-                    (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
+;(use-package ample-zen-theme :ensure t)
+;(use-package zenburn-theme :ensure t)
+(use-package yoshi-theme :ensure t)
+;(use-package color-theme :ensure t)
+;(use-package molokai-theme :ensure t)
+;(use-package atom-one-dark-theme :ensure t)
+;(use-package github-theme :ensure t)
+;(use-package monokai-theme :ensure t)
+;(use-package color-theme-solarized-dark :ensure t)
+;(use-package pastels-on-dark-theme :ensure t)
 #+end_src
 
-** Coding
-*** Kill word under cursor
-#+begin_src emacs-lisp
-(defun kill-word-under-cursor ()
-  (interactive)
-  (backward-word)
-  (kill-word 1))
-(subword-mode)
-(global-set-key (kbd "M-d") 'kill-word-under-cursor)
-#+end_src
 *** Tab width of 2 is compact and readable
 #+begin_src emacs-lisp
 (setq-default tab-width 2)
 #+end_src
-*** Add new line above/below current cursor
+
+*** Show column number
 #+begin_src emacs-lisp
-(defun smart-open-line ()
-  (interactive)
-  (move-end-of-line nil)
-  (newline-and-indent))
-
-(defun smart-open-line-above ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (newline-and-indent)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-(global-set-key (kbd "M-o") 'smart-open-line)
-(global-set-key (kbd "M-O") 'smart-open-line-above)
+(column-number-mode 1)
 #+end_src
 
-#+RESULTS:
-: smart-open-line-above
-
-*** New lines are always indented
-#+begin_src emacs-lisp
-(global-set-key (kbd "RET") 'newline-and-indent)
-#+end_src
-
+** Coding
 *** Emacs Lisp
 **** Edebug
 
@@ -360,11 +304,6 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (define-key emacs-lisp-mode-map (kbd "C-c .") 'find-function-at-point)
 (bind-key "C-c f" 'find-function)
 #+end_src
-*** Show column number
-#+begin_src emacs-lisp
-(column-number-mode 1)
-#+end_src
-
 *** Don't show whitespace in diff, but show context
 #+begin_src emacs-lisp
 (setq vc-diff-switches '("-b" "-B" "-u"))
@@ -380,7 +319,7 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (global-set-key (kbd "C-S-g") #'magit-status)
 #+end_src
 
-*** Autocomplete & snippets
+*** snippets
 #+begin_src emacs-lisp
 (use-package yasnippet
   :ensure yasnippet)
@@ -443,19 +382,10 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 (add-hook 'lisp-mode-hook '(lambda () (paredit-mode)))
 #+end_src
 
-*** python
-#+begin_src emacs-lisp
-(use-package jedi
-   :ensure jedi
-   :init (progn 
-            (add-hook 'python-mode-hook 'jedi:setup)
-            (setq jedi:complete-on-dot t)))
-#+end_src
-    
 *** Go
 #+begin_src emacs-lisp
 (setenv "GOROOT" "/usr/local/go")
-(setenv "GOPATH" (concat (getenv "HOME") "/go"))
+(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
 
 (use-package go-mode
    :ensure go-mode
@@ -626,6 +556,52 @@ Name spaces
 #+end_src
 
 ** Ergonomic
+*** New lines are always indented
+#+begin_src emacs-lisp
+(global-set-key (kbd "RET") 'newline-and-indent)
+#+end_src
+
+*** Kill word under cursor
+#+begin_src emacs-lisp
+(defun kill-word-under-cursor ()
+  (interactive)
+  (backward-word)
+  (kill-word 1))
+(subword-mode)
+(global-set-key (kbd "M-d") 'kill-word-under-cursor)
+#+end_src
+*** Add new line above/below current cursor
+#+begin_src emacs-lisp
+(defun smart-open-line ()
+  (interactive)
+  (move-end-of-line nil)
+  (newline-and-indent))
+
+(defun smart-open-line-above ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "M-o") 'smart-open-line)
+(global-set-key (kbd "M-O") 'smart-open-line-above)
+#+end_src
+
+#+RESULTS:
+: smart-open-line-above
+
+*** Drag stuff
+#+begin_src emacs-lisp
+(use-package drag-stuff
+  :ensure drag-stuff
+  :init 
+  (progn 
+    (drag-stuff-global-mode 1)
+    (add-hook 'org-mode-hook (lambda() (drag-stuff-mode -1)))))
+#+end_src
+
+*** ispell
 #+begin_src emacs-lisp
 (setq ispell-program-name "/usr/local/bin/ispell") ;; ispell path
 #+end_src

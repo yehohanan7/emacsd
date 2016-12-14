@@ -1,6 +1,3 @@
 [submodule "slime"]
 	path = slime
 	url = https://github.com/slime/slime.git
-[submodule "mu"]
-	path = mu
-	url = https://github.com/djcb/mu.git
