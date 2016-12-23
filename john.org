@@ -112,6 +112,7 @@ Remove tooltip, toolbar etc
            ("C-x C-f" . helm-find-files)
            ("C-h a" . helm-apropos)
            ("M-y" . helm-show-kill-ring)
+           ("C-x C-m" . helm-M-x)
            ("M-x" . helm-M-x)))
 
 (ido-mode -1)
@@ -623,6 +624,7 @@ Org mode
 enable keychord
 #+begin_src emacs-lisp
 
+(use-package key-chord :ensure t) 
 (key-chord-mode 1)
 
 #+end_src
@@ -682,6 +684,7 @@ enable keychord
 (global-set-key (kbd "C-S-b") 'backward-word)
 #+end_src
 
+
 **** move cursor to the beginning of line
 #+begin_src emacs-lisp
 (defun back-to-indentation-or-beginning () (interactive)
@@ -720,9 +723,6 @@ enable keychord
   :bind
   (("C-s" . swiper)))
 #+end_src
-
-#+end_src
-
 ** DevOps
 *** shell
 #+begin_src emacs-lisp
