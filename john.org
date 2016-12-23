@@ -29,6 +29,7 @@ after adding these for the first time.
 #+begin_src emacs-lisp
 (require 'fortune)
 (require 'gog-json)
+(require 'gog-run-test)
 #+end_src
 
 ** Install use-package if not installed
@@ -385,8 +386,8 @@ Eldoc provides minibuffer hints when working with Emacs Lisp.
 
 *** Go
 #+begin_src emacs-lisp
-(setenv "GOROOT" "/usr/local/go")
-(setenv "GOPATH" (concat (getenv "HOME") "/goland"))
+(setenv "GOROOT" "/usr/lib/go")
+(setenv "GOPATH" (concat (getenv "HOME") "/go"))
 
 (use-package go-mode
    :ensure go-mode
