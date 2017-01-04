@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: befores
+# key: befores
+# --
+var _ = BeforeSuite(func() {
+	$0
+})
+
+var _ = AfterSuite(func() {
+
+})
+
