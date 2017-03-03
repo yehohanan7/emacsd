@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: tt
+# key: tt
+# --
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
