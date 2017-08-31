@@ -259,8 +259,8 @@ From http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.htm
 
 #+begin_src emacs-lisp
 ;(use-package ample-zen-theme :ensure t)
-;(use-package zenburn-theme :ensure t)
-(use-package yoshi-theme :ensure t)
+(use-package zenburn-theme :ensure t)
+;(use-package yoshi-theme :ensure t)
 ;(use-package color-theme :ensure t)
 ;(use-package molokai-theme :ensure t)
 ;(use-package atom-one-dark-theme :ensure t)
@@ -741,10 +741,15 @@ enable keychord
 
 *** Finding things
 #+begin_src emacs-lisp
+(defun swiper-search ()
+  (interactive)
+  (swiper (thing-at-point 'symbol)))
+
 (use-package swiper-helm
   :ensure t
   :bind
-  (("C-s" . swiper)))
+  (("C-s" . swiper))
+  (("C-S-s" . swiper-search)))
 #+end_src
 ** DevOps
 *** shell
