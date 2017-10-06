@@ -25,11 +25,12 @@
 Use =M-x package-refresh-contents= to reload the list of packages
 after adding these for the first time.
 
-*** Load custom modules
+*** TODO Load custom modules
 #+begin_src emacs-lisp
 (require 'fortune)
 (require 'gog-json)
 (require 'gog-run-test)
+(global-set-key (kbd "C-c C-t")  'gog-run-test)
 #+end_src
 
 ** Install use-package if not installed
